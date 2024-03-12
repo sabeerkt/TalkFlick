@@ -1,3 +1,5 @@
+import 'package:chat/view/profile.dart';
+import 'package:chat/view/widget/setting_tile.dart';
 import 'package:flutter/material.dart';
 
 class Setting extends StatefulWidget {
@@ -34,7 +36,7 @@ class _SettingState extends State<Setting> {
             ],
           ),
           Positioned(
-              top: 120,
+              top: 100,
               left: 0,
               right: 0,
               bottom: 0,
@@ -48,7 +50,33 @@ class _SettingState extends State<Setting> {
                 ),
                 child: ListView(
                   padding: const EdgeInsets.only(left: 25),
-                  children: [],
+                  children: [
+                    SettingTile(
+                      image: "assets/speak.png",
+                      name: "username",
+                      subtile: "bio",
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Profile(),
+                          ),
+                        );
+                      },
+                      child: SettingTile(
+                        image: "assets/speak.png",
+                        name: "account",
+                        subtile: "securty , change number ",
+                      ),
+                    ),
+                    SettingTile(
+                      image: "assets/speak.png",
+                      name: "help",
+                      subtile: "helpcentre",
+                    ),
+                  ],
                 ),
               ))
         ],

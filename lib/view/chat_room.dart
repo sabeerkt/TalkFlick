@@ -13,10 +13,6 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     // Set the status bar color
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF292F3F),
-      statusBarIconBrightness: Brightness.light,
-    ));
 
     return Scaffold(
       backgroundColor: const Color(0xFF292F3F),
@@ -29,10 +25,10 @@ class _ChatRoomState extends State<ChatRoom> {
                 SizedBox(
                   width: 10,
                 ),
-                Icon(
-                  Icons.person,
-                  size: 24, // Set the icon size
-                  color: Colors.white, // Set the icon color
+                CircleAvatar(
+                  radius: 15, // Set the radius of the circular image
+                  backgroundImage:
+                      AssetImage('assets/chat.png'), // Replace with your image
                 ),
                 SizedBox(width: 10),
                 Text(

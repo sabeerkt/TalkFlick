@@ -12,7 +12,7 @@ class GroupMessage extends StatefulWidget {
 class _GroupMessageState extends State<GroupMessage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Color(0xFF292F3F),
       body: Column(
         children: [
@@ -36,6 +36,31 @@ class _GroupMessageState extends State<GroupMessage> {
             padding: EdgeInsets.all(8.0),
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    color: Colors.blue, // Set the background color here
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage('assets/chat.gif'),
+                      ),
+                      title: const Text(
+                        'Create Groups',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onTap: () {
+                        // Handle the onTap action
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Group_message(),
                 SizedBox(
                   height: 10,

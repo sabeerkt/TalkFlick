@@ -39,34 +39,38 @@ Column callsTile(String name, String message, String filename, int msgCount,
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.black,
-                  // backgroundImage: AssetImage("assets/call-user.png"),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.call,
-                        color: Colors.white,
-                      )),
+                  child: GestureDetector(
+                    onTap: () {
+                      // Handle the call action
+                    },
+                    child: Image.asset(
+                      "assets/telephone-call.png", // Replace with your image path
+                      width: 24,
+                      height: 24,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 SizedBox(width: 20),
                 CircleAvatar(
                   backgroundColor: Colors.black,
-                  // backgroundImage: AssetImage("assets/call-user.png"),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.video_call,
-                        color: Colors.white,
-                      )),
+                  child: GestureDetector(
+                    onTap: () {
+                      // Handle the video call action
+                    },
+                    child: Image.asset(
+                      "assets/telephone-call.png", // Replace with your image path
+                      width: 24,
+                      height: 24,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),
           )
         ],
       ),
-      // const Divider(
-      //   indent: 70,
-      //   height: 20,
-      // )
       const SizedBox(
         height: 20,
       )

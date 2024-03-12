@@ -1,3 +1,4 @@
+import 'package:chat/view/chat_page.dart';
 import 'package:flutter/material.dart';
 
 class MyListTile extends StatefulWidget {
@@ -47,6 +48,13 @@ class _MyListTileState extends State<MyListTile> {
       ),
       onTap: () {
         // Handle the onTap action
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ChatPage(), // Replace YourNextPage with the actual widget for the next page
+          ),
+        );
       },
     );
   }
