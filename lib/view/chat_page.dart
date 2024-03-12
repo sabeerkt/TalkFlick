@@ -1,3 +1,4 @@
+import 'package:chat/view/widget/MessageTile.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
@@ -93,7 +94,12 @@ class _ChatPageState extends State<ChatPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
+                          // Add padding to the right side of the TextField
+                          contentPadding: EdgeInsets.only(
+                              right: 80.0), // Adjust the value as needed
                         ),
+                        maxLines:
+                            null, // or any positive integer greater than 1
                       ),
                       Positioned(
                         right: 0,
@@ -115,11 +121,32 @@ class _ChatPageState extends State<ChatPage> {
                                 }
                               },
                               itemBuilder: (BuildContext context) {
-                                return ['Camera', 'Video', 'Location']
-                                    .map((String choice) {
+                                return [
+                                  {
+                                    'label': 'Camera',
+                                    'image': 'assets/google.png'
+                                  },
+                                  {
+                                    'label': 'Video',
+                                    'image': 'assets/google.png'
+                                  },
+                                  {
+                                    'label': 'Location',
+                                    'image': 'assets/google.png'
+                                  },
+                                ].map((Map<String, dynamic> choice) {
                                   return PopupMenuItem<String>(
-                                    value: choice.toLowerCase(),
-                                    child: Text(choice),
+                                    value: choice['label'].toLowerCase(),
+                                    child: ListTile(
+                                      leading: Image.asset(
+                                        choice['image'],
+                                        width:
+                                            24.0, // Adjust the width as needed
+                                        height:
+                                            24.0, // Adjust the height as needed
+                                      ),
+                                      title: Text(choice['label']),
+                                    ),
                                   );
                                 }).toList();
                               },
@@ -142,37 +169,6 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MessageTile extends StatelessWidget {
-  final String message;
-  final bool isCurrentUser;
-
-  MessageTile({required this.message, required this.isCurrentUser});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment:
-            isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: isCurrentUser ? Colors.blue : Colors.green,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Text(
-              message,
-              style: TextStyle(color: Colors.white),
             ),
           ),
         ],

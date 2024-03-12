@@ -19,7 +19,7 @@ class _CallPageState extends State<CallPage> {
           const Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 70, left: 10, right: 10),
+                padding: EdgeInsets.only(top: 50, left: 10, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -36,7 +36,7 @@ class _CallPageState extends State<CallPage> {
             ],
           ),
           Positioned(
-              top: 120,
+              top: 100,
               left: 0,
               right: 0,
               bottom: 0,

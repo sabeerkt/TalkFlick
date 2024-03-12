@@ -1,15 +1,44 @@
+import 'package:flutter/material.dart';
 import 'package:chat/view/profile.dart';
 import 'package:chat/view/widget/setting_tile.dart';
-import 'package:flutter/material.dart';
 
 class Setting extends StatefulWidget {
-  const Setting({super.key});
+  const Setting({Key? key}) : super(key: key);
 
   @override
   State<Setting> createState() => _SettingState();
 }
 
 class _SettingState extends State<Setting> {
+  void _showDeleteAccountDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Account'),
+          content: Text('Are you sure you want to delete your account?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Implement the delete account logic here
+                // You can add your own logic to delete the account
+                // For now, let's just close the dialog
+                Navigator.of(context).pop();
+              },
+              child: Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,16 +48,17 @@ class _SettingState extends State<Setting> {
           const Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 70, left: 10, right: 10),
+                padding: EdgeInsets.only(top: 50, left: 10, right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Setting",
                       style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ],
                 ),
@@ -36,51 +66,97 @@ class _SettingState extends State<Setting> {
             ],
           ),
           Positioned(
-              top: 100,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40)),
-                  color: Color(0xFF292F3F),
+            top: 100,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
                 ),
-                child: ListView(
-                  padding: const EdgeInsets.only(left: 25),
-                  children: [
-                    SettingTile(
-                      image: "assets/speak.png",
-                      name: "username",
-                      subtile: "bio",
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Profile(),
+                color: Color(0xFF292F3F),
+              ),
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(
+                          10.0,
+                        ), // Set your desired border radius
+                      ),
+                      child: const ListTile(
+                        tileColor:
+                            Colors.blue, // Set your desired background color
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundColor:
+                              Colors.white, // Set your desired color
+                          backgroundImage: AssetImage("assets/speak.png"),
+                        ),
+                        title: Text(
+                          'CustomUsername',
+                          style: TextStyle(
+                            color:
+                                Colors.yellow, // Set your desired text color
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18, // Set your desired font size
                           ),
-                        );
-                      },
-                      child: SettingTile(
-                        image: "assets/speak.png",
-                        name: "account",
-                        subtile: "securty , change number ",
+                        ),
+                        subtitle: Text(
+                          'CustomBio',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontStyle:
+                                FontStyle.italic, // Set your desired text style
+                          ),
+                        ),
                       ),
                     ),
-                    SettingTile(
+                  ),
+                  Divider(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Profile(),
+                        ),
+                      );
+                    },
+                    child: const SettingTile(
                       image: "assets/speak.png",
-                      name: "help",
-                      subtile: "helpcentre",
+                      name: "account",
+                      subtile: "securty , change number ",
                     ),
-                  ],
-                ),
-              ))
+                  ),
+                  const SettingTile(
+                    image: "assets/speak.png",
+                    name: "help",
+                    subtile: "helpcentre",
+                  ),
+                   SettingTile(
+                    image: "assets/speak.png",
+                    name: "dlt ac",
+                    subtile: "dlt",
+                    onTap: _showDeleteAccountDialog,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
+

@@ -1,3 +1,6 @@
+// Import the 'dart:ui' library to use the 'Image' class.
+import 'dart:ui' as ui;
+
 import 'package:chat/view/call.dart';
 import 'package:chat/view/chat_room.dart';
 import 'package:chat/view/group_Message.dart';
@@ -20,7 +23,6 @@ class _BottomBarState extends State<BottomBar> {
     ChatRoom(),
     GroupMessage(),
     const CallPage(),
-    // chart(),
     Setting(),
   ];
 
@@ -37,14 +39,12 @@ class _BottomBarState extends State<BottomBar> {
           currentIndex: _currentIndex,
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
           selectedItemColor: Color.fromARGB(255, 34, 150, 186),
-          unselectedItemColor: Color.fromARGB(255, 0, 0, 0),
           onTap: (i) => setState(() => _currentIndex = i),
           items: [
-            _buildNavItem("ChatRoom", Icons.chat, 0),
-            _buildNavItem("GroupMessage", Icons.group, 1),
-            _buildNavItem("CallPage", Icons.call, 2),
-            // _buildNavItem("Chart", Icons.pie_chart, 3),
-            _buildNavItem("Setting", Icons.settings, 4),
+            _buildNavItem("ChatRoom", 'assets/chat.png', 0),
+            _buildNavItem("GroupMessage", 'assets/group-chat.png', 1),
+            _buildNavItem("CallPage", 'assets/telephone-call.png', 2),
+            _buildNavItem("Setting", 'assets/settings.png', 3),
           ],
         ),
       ),
@@ -52,7 +52,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   BottomNavigationBarItem _buildNavItem(
-      String label, IconData icon, int index) {
+      String label, String imagePath, int index) {
     return BottomNavigationBarItem(
       label: label,
       icon: Container(
@@ -64,11 +64,10 @@ class _BottomBarState extends State<BottomBar> {
                 )
               : null,
         ),
-        child: Icon(
-          icon,
-          color: _currentIndex == index
-              ? Color.fromARGB(255, 34, 150, 186)
-              : Color.fromARGB(255, 0, 0, 0),
+        child: Image.asset(
+          imagePath,
+          width: 24.0, // Adjust the width as needed
+          height: 24.0, // Adjust the height as needed
         ),
       ),
     );
