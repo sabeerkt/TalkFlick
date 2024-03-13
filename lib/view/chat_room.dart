@@ -1,3 +1,4 @@
+import 'package:chat/view/chat_page.dart';
 import 'package:chat/view/widget/list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +29,7 @@ class _ChatRoomState extends State<ChatRoom> {
                 CircleAvatar(
                   radius: 15, // Set the radius of the circular image
                   backgroundImage:
-                      AssetImage('assets/chat.png'), // Replace with your image
+                      AssetImage('assets/user.png'), // Replace with your image
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -82,15 +83,49 @@ class _ChatRoomState extends State<ChatRoom> {
           ),
           Column(
             children: [
-              MyListTile(),
+              MyListTile(
+                image: 'assets/persn 1.png',
+                name: "assa",
+                subtitle: 'hai broo',
+                time: "Today",
+                onTap: () {},
+              ),
               SizedBox(
                 height: 10,
               ),
-              MyListTile(),
+              MyListTile(
+                time: "yestrdy",
+                image: 'assets/persn 1.png',
+                name: "assa",
+                subtitle: 'hai broo',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ChatPage(), // Replace YourNextPage with the actual widget for the next page
+                    ),
+                  );
+                },
+              ),
               SizedBox(
                 height: 10,
               ),
-              MyListTile()
+              MyListTile(
+                time: "yestrdy",
+                image: 'assets/persn 1.png',
+                name: "assa",
+                subtitle: 'hai broo',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ChatPage(), // Replace YourNextPage with the actual widget for the next page
+                    ),
+                  );
+                },
+              ),
             ],
           )
         ],

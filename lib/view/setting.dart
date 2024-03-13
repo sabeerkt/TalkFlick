@@ -97,13 +97,12 @@ class _SettingState extends State<Setting> {
                           radius: 25,
                           backgroundColor:
                               Colors.white, // Set your desired color
-                          backgroundImage: AssetImage("assets/speak.png"),
+                          backgroundImage: AssetImage("assets/persn 1.png"),
                         ),
                         title: Text(
                           'CustomUsername',
                           style: TextStyle(
-                            color:
-                                Colors.yellow, // Set your desired text color
+                            color: Colors.yellow, // Set your desired text color
                             fontWeight: FontWeight.bold,
                             fontSize: 18, // Set your desired font size
                           ),
@@ -133,20 +132,20 @@ class _SettingState extends State<Setting> {
                       );
                     },
                     child: const SettingTile(
-                      image: "assets/speak.png",
-                      name: "account",
-                      subtile: "securty , change number ",
+                      image: "assets/user.png",
+                      name: "Account",
+                      subtile: "change username  profile  Bio ",
                     ),
                   ),
                   const SettingTile(
-                    image: "assets/speak.png",
+                    image: "assets/help.png",
                     name: "help",
-                    subtile: "helpcentre",
+                    subtile: "HelpCentre ",
                   ),
-                   SettingTile(
-                    image: "assets/speak.png",
-                    name: "dlt ac",
-                    subtile: "dlt",
+                  SettingTile(
+                    image: "assets/delete-friend.png",
+                    name: "Delete Account",
+                    subtile: "Delete",
                     onTap: _showDeleteAccountDialog,
                   ),
                 ],
@@ -158,5 +157,3 @@ class _SettingState extends State<Setting> {
     );
   }
 }
-
-

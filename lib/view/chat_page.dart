@@ -28,7 +28,7 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             CircleAvatar(
               radius: 20,
-              backgroundImage: AssetImage('assets/chat.gif'),
+              backgroundImage: AssetImage('assets/user.png'),
             ),
             SizedBox(width: 8),
             Column(
@@ -85,21 +85,32 @@ class _ChatPageState extends State<ChatPage> {
                 Expanded(
                   child: Stack(
                     children: [
-                      TextField(
-                        controller: _messageController,
-                        decoration: InputDecoration(
-                          hintText: 'Type your message...',
-                          fillColor: const Color.fromARGB(255, 113, 107, 107),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: const Color.fromARGB(255, 113, 107, 107),
                           ),
-                          // Add padding to the right side of the TextField
-                          contentPadding: EdgeInsets.only(
-                              right: 80.0), // Adjust the value as needed
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: TextField(
+                              controller: _messageController,
+                              decoration: InputDecoration(
+                                hintText: 'Type your message...',
+                                border:
+                                    InputBorder.none, // Remove default border
+                                hintStyle: TextStyle(
+                                    color: Colors.grey[400]), // Hint text color
+                              ),
+                              maxLines:
+                                  null, // or any positive integer greater than 1
+                              style:
+                                  TextStyle(color: Colors.white), // Text color
+                            ),
+                          ),
                         ),
-                        maxLines:
-                            null, // or any positive integer greater than 1
                       ),
                       Positioned(
                         right: 0,
@@ -128,11 +139,11 @@ class _ChatPageState extends State<ChatPage> {
                                   },
                                   {
                                     'label': 'Video',
-                                    'image': 'assets/google.png'
+                                    'image': 'assets/video-calling.png'
                                   },
                                   {
                                     'label': 'Location',
-                                    'image': 'assets/google.png'
+                                    'image': 'assets/map.png'
                                   },
                                 ].map((Map<String, dynamic> choice) {
                                   return PopupMenuItem<String>(

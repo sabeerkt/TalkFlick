@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Group_message extends StatefulWidget {
-  const Group_message({super.key});
+  const Group_message({Key? key, required this.name, required this.image}) : super(key: key);
+
+  final String name;
+  final String image;
 
   @override
   State<Group_message> createState() => _Group_messageState();
@@ -11,13 +14,12 @@ class _Group_messageState extends State<Group_message> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const CircleAvatar(
-        radius: 25, // Set the radius of the circular image
-        backgroundImage:
-            AssetImage('assets/chat.gif'), // Replace with your image
+      leading: CircleAvatar(
+        radius: 25,
+        backgroundImage: AssetImage(widget.image),
       ),
-      title: const Text(
-        'Groups',
+      title: Text(
+        widget.name,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

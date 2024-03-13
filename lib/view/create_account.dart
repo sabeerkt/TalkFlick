@@ -13,6 +13,7 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,15 @@ class _CreateAccountState extends State<CreateAccount> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(15, 253, 253, 253),
       ),
-      body: Center( // Wrap the Column with Center
+      body: Center(
+        // Wrap the Column with Center
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // Set crossAxisAlignment to center
-            mainAxisAlignment: MainAxisAlignment.center, // Set mainAxisAlignment to center
+            crossAxisAlignment:
+                CrossAxisAlignment.center, // Set crossAxisAlignment to center
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Set mainAxisAlignment to center
             children: [
               const Text(
                 "Welcome to!\nTalkFlick ",
@@ -47,6 +51,11 @@ class _CreateAccountState extends State<CreateAccount> {
                 hinttext: 'Second name',
                 obscureText: true,
                 controller: usernameController,
+              ),
+              TextForm(
+                hinttext: 'Email',
+                obscureText: true,
+                controller: emailController,
               ),
               TextForm(
                 hinttext: 'Password',

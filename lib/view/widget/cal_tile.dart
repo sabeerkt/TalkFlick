@@ -38,7 +38,7 @@ Column callsTile(String name, String message, String filename, int msgCount,
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.black,
+                  // backgroundColor: Colors.black,
                   child: GestureDetector(
                     onTap: () {
                       // Handle the call action
@@ -47,22 +47,22 @@ Column callsTile(String name, String message, String filename, int msgCount,
                       "assets/telephone-call.png", // Replace with your image path
                       width: 24,
                       height: 24,
-                      color: Colors.white,
+                      // color: Colors.white,
                     ),
                   ),
                 ),
                 SizedBox(width: 20),
                 CircleAvatar(
-                  backgroundColor: Colors.black,
+                  //  backgroundColor: Colors.black,
                   child: GestureDetector(
                     onTap: () {
                       // Handle the video call action
                     },
                     child: Image.asset(
-                      "assets/telephone-call.png", // Replace with your image path
+                      "assets/video-calling.png", // Replace with your image path
                       width: 24,
                       height: 24,
-                      color: Colors.white,
+                      // color: Colors.white,
                     ),
                   ),
                 ),
