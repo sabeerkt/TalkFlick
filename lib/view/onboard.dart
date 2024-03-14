@@ -1,3 +1,4 @@
+import 'package:chat/constant/const.dart';
 import 'package:chat/view/create_account.dart';
 import 'package:chat/view/login.dart';
 import 'package:chat/view/widget/button.dart';
@@ -25,9 +26,9 @@ class _OnBoardState extends State<OnBoard> {
           ),
         ),
         centerTitle: true, // Center the title
-        backgroundColor: const Color(0xFF3F3D56), // Set the background color
+        backgroundColor: bgColor, // Set the background color
       ),
-      backgroundColor: const Color(0xFF3F3D56),
+      backgroundColor: bgColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

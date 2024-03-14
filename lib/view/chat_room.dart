@@ -94,9 +94,9 @@ class _ChatRoomState extends State<ChatRoom> {
                 height: 10,
               ),
               MyListTile(
-                time: "yestrdy",
+                time: "yesterday",
                 image: 'assets/persn 1.png',
-                name: "assa",
+                name: "John",
                 subtitle: 'hai broo',
                 onTap: () {
                   Navigator.push(
@@ -112,9 +112,9 @@ class _ChatRoomState extends State<ChatRoom> {
                 height: 10,
               ),
               MyListTile(
-                time: "yestrdy",
+                time: "yesterday",
                 image: 'assets/persn 1.png',
-                name: "assa",
+                name: "Emma",
                 subtitle: 'hai broo',
                 onTap: () {
                   Navigator.push(

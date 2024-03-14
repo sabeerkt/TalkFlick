@@ -30,7 +30,7 @@ class _ProfileState extends State<Profile> {
             child: TextForm(
               controller: userNameController,
               hinttext: "username",
-              obscureText: true,
+             // obscureText: true,
             ),
           ),
           Padding(
@@ -38,7 +38,7 @@ class _ProfileState extends State<Profile> {
             child: TextForm(
               controller: bioController,
               hinttext: "Bio",
-              obscureText: true,
+             // obscureText: true,
             ),
           ),
           Button(

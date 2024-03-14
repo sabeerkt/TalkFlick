@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:chat/constant/const.dart';
 import 'package:chat/view/forgot_password.dart';
+import 'package:chat/view/phone.dart';
 import 'package:chat/view/spalsh.dart';
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:chat/view/widget/tile.dart';
-import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart'; // Import the lottie package
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,12 +19,13 @@ class _LoginPageState extends State<LoginPage> {
   // Declare controllers for username and password
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _isLoggingIn = false; // Variable to track login process
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(15, 253, 253, 253),
+        backgroundColor: bgColor,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -30,27 +34,49 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  "Welcome back!\nTalkFlick to see you, Again!",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30, // Adjusted font size
-                    letterSpacing:
-                        1.2, // Increased letter spacing for better readability
-                    color: Colors.white, // Set the text color to white
-                    height: 1.5, // Increased line height for better spacing
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Welcome back!\nTalkFlick to see you, Again!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30, // Adjusted font size
+                      letterSpacing:
+                          1.2, // Increased letter spacing for better readability
+                      color: Colors.white, // Set the text color to white
+                      height: 1.5, // Increased line height for better spacing
+                    ),
                   ),
                 ),
                 const SizedBox(height: 25),
-                TextForm(
-                  hinttext: 'Email',
-                  obscureText: true,
-                  controller: emailController,
-                ),
-                TextForm(
-                  hinttext: 'Password',
-                  obscureText: true,
-                  controller: passwordController,
+                Stack(
+                  alignment:
+                      Alignment.center, // Align Lottie animation at the center
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextForm(
+                          hinttext: 'Email',
+                          //obscureText: true,
+                          controller: emailController,
+                        ),
+                        TextForm(
+                          hinttext: 'Password',
+                          //  obscureText: true,
+                          controller: passwordController,
+                        ),
+                      ],
+                    ),
+                    // Lottie animation shown when logging in
+                    _isLoggingIn
+                        ? Lottie.asset(
+                            'assets/login sucedss.json', // Adjust the path to your animation
+                            width: 150,
+                            height: 150,
+                          )
+                        : Container(), // Empty container if not logging in
+                  ],
                 ),
                 const SizedBox(height: 10),
                 GestureDetector(
@@ -77,12 +103,18 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.black,
                   name: "Login",
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SplashScreen(),
-                      ),
-                    );
+                    setState(() {
+                      _isLoggingIn = true; // Start login process
+                    });
+                    // Simulate a login process (replace this with actual login logic)
+                    Future.delayed(Duration(seconds: 2), () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SplashScreen(),
+                        ),
+                      );
+                    });
                   },
                 ),
                 const SizedBox(height: 10),
@@ -111,11 +143,21 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SqureTile(
-                      imagePath: "assets/telephone-call.png",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PhoneOtp(),
+                          ),
+                        );
+                      },
+                      child: SqureTile(
+                        imagePath: "assets/telephone-call.png",
+                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -131,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      backgroundColor: const Color(0xFF3F3D56),
+      backgroundColor: bgColor,
     );
   }
 }

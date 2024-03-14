@@ -1,3 +1,4 @@
+import 'package:chat/constant/const.dart';
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(15, 253, 253, 253),
+        backgroundColor: bgColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -49,7 +50,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             const SizedBox(height: 25),
             TextForm(
               hinttext: 'First name ',
-              obscureText: true,
+              //  obscureText: true,
               controller: usernameController,
             ),
             const SizedBox(height: 10),
@@ -69,7 +70,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ],
         ),
       ),
-      backgroundColor: const Color(0xFF3F3D56),
+      backgroundColor: bgColor,
     );
   }
 }
