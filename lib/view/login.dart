@@ -103,18 +103,34 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.black,
                   name: "Login",
                   onTap: () {
-                    setState(() {
-                      _isLoggingIn = true; // Start login process
-                    });
-                    // Simulate a login process (replace this with actual login logic)
-                    Future.delayed(Duration(seconds: 2), () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SplashScreen(),
+                    String email = emailController.text.trim();
+                    String password = passwordController.text.trim();
+
+                    // Check if email or password is empty
+                    if (email.isEmpty || password.isEmpty) {
+                      // Show a snackbar centered on the screen
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill in all fields.'),
+                          duration: Duration(seconds: 2),
+                          behavior: SnackBarBehavior
+                              .floating, // Center the snackbar on the screen
                         ),
                       );
-                    });
+                    } else {
+                      setState(() {
+                        _isLoggingIn = true; // Start login process
+                      });
+                      // Simulate a login process (replace this with actual login logic)
+                      Future.delayed(Duration(seconds: 2), () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SplashScreen(),
+                          ),
+                        );
+                      });
+                    }
                   },
                 ),
                 const SizedBox(height: 10),

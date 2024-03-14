@@ -2,6 +2,7 @@ import 'package:chat/constant/const.dart';
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -46,6 +47,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 color: Colors.white,
                 height: 1.5,
               ),
+            ),
+            Lottie.asset(
+              'assets/forgt pswrd.json', // Replace with the actual path or asset name
             ),
             const SizedBox(height: 25),
             TextForm(

@@ -64,7 +64,7 @@ class _OnBoardState extends State<OnBoard> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const CreateAccount()), // Remove the semicolon here
+                               CreateAccount(key: null,)), // Remove the semicolon here
                     );
                   },
                 ),

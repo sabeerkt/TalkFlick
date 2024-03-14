@@ -1,3 +1,4 @@
+import 'package:chat/constant/const.dart';
 import 'package:chat/view/chat_page.dart';
 import 'package:chat/view/widget/list_tile.dart';
 import 'package:flutter/material.dart';
@@ -16,27 +17,28 @@ class _ChatRoomState extends State<ChatRoom> {
     // Set the status bar color
 
     return Scaffold(
-      backgroundColor: const Color(0xFF292F3F),
+      backgroundColor: bgColor,
       body: Column(
         children: [
           const Padding(
             padding: EdgeInsets.all(10),
             child: Row(
               children: [
-                SizedBox(
-                  width: 10,
-                ),
-                CircleAvatar(
-                  radius: 15, // Set the radius of the circular image
-                  backgroundImage:
-                      AssetImage('assets/user.png'), // Replace with your image
-                ),
                 SizedBox(width: 10),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors
+                      .transparent, // Ensure the background is transparent
+                  backgroundImage: AssetImage('assets/man (1).png'),
+                ),
+                SizedBox(width: 15),
                 Text(
                   "Martina Wolna",
                   style: TextStyle(
-                    color: Colors.white, // Set the text color
-                    fontSize: 18, // Set the text size
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight:
+                        FontWeight.bold, // Apply bold font weight for emphasis
                   ),
                 ),
               ],
@@ -49,15 +51,14 @@ class _ChatRoomState extends State<ChatRoom> {
                 Expanded(
                   child: Row(
                     children: [
-                      SizedBox(width: 8),
                       Expanded(
                         child: TextField(
                           style: TextStyle(
-                              color: Color.fromARGB(255, 177, 185, 207)),
+                            color: Color.fromARGB(255, 177, 185, 207),
+                          ),
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Color.fromARGB(255, 96, 88,
-                                88), // Set the background color of the TextField
+                            fillColor: Color.fromARGB(255, 255, 255, 255),
                             hintText: "Search...",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -65,9 +66,10 @@ class _ChatRoomState extends State<ChatRoom> {
                             ),
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 16),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.grey,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.all(
+                                  8.0), // Adjust padding as needed
+                              child: Image.asset("assets/searchneew.png"),
                             ),
                           ),
                         ),
@@ -85,7 +87,7 @@ class _ChatRoomState extends State<ChatRoom> {
             children: [
               MyListTile(
                 image: 'assets/persn 1.png',
-                name: "assa",
+                name: "Arya",
                 subtitle: 'hai broo',
                 time: "Today",
                 onTap: () {},

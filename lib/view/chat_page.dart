@@ -1,3 +1,4 @@
+import 'package:chat/constant/const.dart';
 import 'package:chat/view/widget/MessageTile.dart';
 import 'package:flutter/material.dart';
 
@@ -15,16 +16,16 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF292F3F),
+      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF292F3F),
+        backgroundColor: bgColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Row(
+        title: const Row(
           children: [
             CircleAvatar(
               radius: 20,
@@ -54,13 +55,13 @@ class _ChatPageState extends State<ChatPage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.phone),
+            icon: const Icon(Icons.phone),
             onPressed: () {
               // Handle phone call action
             },
           ),
           IconButton(
-            icon: Icon(Icons.videocam),
+            icon: const Icon(Icons.videocam),
             onPressed: () {
               // Handle video call action
             },
@@ -106,8 +107,8 @@ class _ChatPageState extends State<ChatPage> {
                               ),
                               maxLines:
                                   null, // or any positive integer greater than 1
-                              style:
-                                  TextStyle(color: Colors.white), // Text color
+                              style: const TextStyle(
+                                  color: Colors.white), // Text color
                             ),
                           ),
                         ),
@@ -120,7 +121,7 @@ class _ChatPageState extends State<ChatPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             PopupMenuButton<String>(
-                              icon: Icon(Icons.attach_file),
+                              icon: const Icon(Icons.attach_file),
                               onSelected: (value) {
                                 // Handle menu item selection
                                 if (value == 'camera') {
@@ -163,7 +164,7 @@ class _ChatPageState extends State<ChatPage> {
                               },
                             ),
                             IconButton(
-                              icon: Icon(Icons.send),
+                              icon: const Icon(Icons.send),
                               onPressed: () {
                                 if (_messageController.text.isNotEmpty) {
                                   setState(() {

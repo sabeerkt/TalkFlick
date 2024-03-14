@@ -41,17 +41,23 @@ class _GroupMessageState extends State<GroupMessage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    color: const Color.fromARGB(
-                        255, 0, 0, 0), // Set the background color here
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 246, 245,
+                          245), // Changed the background color to black
+                      borderRadius: BorderRadius.circular(
+                          10), // Added border radius for rounded corners
+                    ),
                     child: ListTile(
-                      leading: const CircleAvatar(
+                      leading: CircleAvatar(
                         radius: 25,
+                        backgroundColor: const Color.fromARGB(0, 230, 224,
+                            224), // Set the background color of the CircleAvatar to transparent
                         backgroundImage: AssetImage('assets/add-friend.png'),
                       ),
-                      title: const Text(
+                      title: Text(
                         'Create Groups',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 3, 3, 3),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -69,12 +75,29 @@ class _GroupMessageState extends State<GroupMessage> {
                                     controller: _groupNameController,
                                     decoration: InputDecoration(
                                       labelText: 'Group Name',
+                                      labelStyle: TextStyle(
+                                          color: Colors
+                                              .black), // Customize label color
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors
+                                                .black), // Customize focused border color
+                                      ),
                                     ),
                                   ),
+                                  SizedBox(height: 10),
                                   TextField(
                                     controller: _descriptionController,
                                     decoration: InputDecoration(
                                       labelText: 'Description',
+                                      labelStyle: TextStyle(
+                                          color: Colors
+                                              .black), // Customize label color
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors
+                                                .black), // Customize focused border color
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -116,14 +139,14 @@ class _GroupMessageState extends State<GroupMessage> {
                 ),
                 Group_message(
                   image: "assets/teamwork.png",
-                  name: "grp 1",
+                  name: "Group  1",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Group_message(
                   image: "assets/group.png",
-                  name: "grp 2",
+                  name: "Groups 2",
                 ),
               ],
             ),
