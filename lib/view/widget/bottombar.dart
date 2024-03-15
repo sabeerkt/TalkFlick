@@ -1,6 +1,7 @@
 // Import the 'dart:ui' library to use the 'Image' class.
 import 'dart:ui' as ui;
 
+import 'package:chat/constant/const.dart';
 import 'package:chat/view/call.dart';
 import 'package:chat/view/chat_room.dart';
 import 'package:chat/view/group_Message.dart';
@@ -37,7 +38,7 @@ class _BottomBarState extends State<BottomBar> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: ui.Color.fromARGB(255, 97, 95, 128),
           selectedItemColor: Color.fromARGB(255, 34, 150, 186),
           onTap: (i) => setState(() => _currentIndex = i),
           items: [

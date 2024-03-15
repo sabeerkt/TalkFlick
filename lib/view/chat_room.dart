@@ -54,11 +54,11 @@ class _ChatRoomState extends State<ChatRoom> {
                       Expanded(
                         child: TextField(
                           style: TextStyle(
-                            color: Color.fromARGB(255, 177, 185, 207),
+                            color: Color.fromARGB(255, 27, 26, 26),
                           ),
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Color.fromARGB(255, 255, 255, 255),
+                            fillColor: Color.fromARGB(255, 247, 247, 247),
                             hintText: "Search...",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),

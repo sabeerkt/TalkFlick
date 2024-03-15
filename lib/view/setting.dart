@@ -15,8 +15,8 @@ class _SettingState extends State<Setting> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Account'),
-          content: Text('Are you sure you want to delete your account?'),
+          title: const Text('Delete Account'),
+          content: const Text('Are you sure you want to delete your account?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -25,13 +25,13 @@ class _SettingState extends State<Setting> {
                 // For now, let's just close the dialog
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
           ],
         );
@@ -83,42 +83,44 @@ class _SettingState extends State<Setting> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(
-                          10.0,
-                        ), // Set your desired border radius
-                      ),
-                      child: const ListTile(
-                        tileColor:
-                            Colors.blue, // Set your desired background color
-                        leading: CircleAvatar(
-                          radius: 25,
-                          backgroundColor:
-                              Colors.white, // Set your desired color
-                          backgroundImage: AssetImage("assets/persn 1.png"),
+                    child: SizedBox(
+                      height: 100, // Set your desired height
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        title: Text(
-                          'CustomUsername',
-                          style: TextStyle(
-                            color: Colors.yellow, // Set your desired text color
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18, // Set your desired font size
+                        child: const ListTile(
+                          tileColor:
+                              Colors.blue, // Set your desired background color
+                          leading: CircleAvatar(
+                            radius: 25,
+                            backgroundColor:
+                                Colors.white, // Set your desired color
+                            backgroundImage: AssetImage("assets/persn 1.png"),
                           ),
-                        ),
-                        subtitle: Text(
-                          'CustomBio',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontStyle:
-                                FontStyle.italic, // Set your desired text style
+                          title: Text(
+                            'CustomUsername',
+                            style: TextStyle(
+                              color:
+                                  Colors.yellow, // Set your desired text color
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25, // Set your desired font size
+                            ),
+                          ),
+                          subtitle: Text(
+                            'CustomBio',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontStyle: FontStyle
+                                  .italic, // Set your desired text style
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   const SizedBox(
                     height: 20,
                   ),

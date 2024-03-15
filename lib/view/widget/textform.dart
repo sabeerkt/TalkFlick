@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class TextForm extends StatefulWidget {
   final TextEditingController controller;
   final String hinttext;
+  final bool
+      showVisibilityToggle; // New parameter to control the visibility toggle icon
 
   const TextForm({
     Key? key,
     required this.controller,
     required this.hinttext,
+    this.showVisibilityToggle =
+        true, // Default value to show the visibility toggle icon
   }) : super(key: key);
 
   @override
@@ -23,7 +27,8 @@ class _TextFormState extends State<TextForm> {
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         controller: widget.controller,
-        obscureText: obscureText,
+        obscureText:
+            !obscureText, // Reversed to show the text when obscureText is true
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
@@ -31,19 +36,14 @@ class _TextFormState extends State<TextForm> {
           fillColor: const Color.fromARGB(255, 230, 219, 219),
           filled: true,
           hintText: widget.hinttext,
-          suffixIcon: IconButton(
-            icon: Icon(
-              obscureText ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              setState(() {
-                obscureText = !obscureText;
-              });
-            },
-          ),
+          // Only show the icon if showVisibilityToggle is true
         ),
-        //validator: _validateInput,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
       ),
     );
   }

@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                           hinttext: 'Email',
                           //obscureText: true,
                           controller: emailController,
+                          showVisibilityToggle: false,
                         ),
                         TextForm(
                           hinttext: 'Password',
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "Forgot your password",
+                      "Forgot your password ?",
                       style: TextStyle(
                         color: Colors.red,
                       ),
@@ -145,7 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Text("or login with"),
+                      child: Text(
+                        "or login with",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     Expanded(
                       child: Divider(

@@ -48,24 +48,27 @@ class _CallPageState extends State<CallPage> {
                       topRight: Radius.circular(40)),
                   color: Color(0xFF292F3F),
                 ),
-                child: ListView(
-                  padding: const EdgeInsets.only(left: 25),
-                  children: [
-                    callsTile(
-                        'Laura', 'Today, 09:30 AM', 'prsn 2.png', 0, context),
-                    callsTile('Kalya', 'Yesterday, 09:30 AM', 'persn 1.png', 2,
-                        context),
-                    callsTile(
-                        'Mary', 'Monday, 09:30 AM', 'user.png', 6, context),
-                    callsTile(
-                        'Hellen', 'Today, 09:30 AM', 'prsn 2.png', 0, context),
-                    callsTile(
-                        'Louren', 'Today, 09:30 AM', 'man (2).png', 3, context),
-                    callsTile(
-                        'Tom', 'Sunday, 09:30 AM', 'persn 1.png', 0, context),
-                    callsTile(
-                        'Laura', 'Today, 09:30 AM', 'man (1).png', 0, context),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    // padding: const EdgeInsets.only(left: 25),
+                    children: [
+                      callsTile('Laura', 'Today, 09:30 AM',
+                          'assets/man (1).png', 0, context),
+                      callsTile('Kalya', 'Yesterday, 09:30 AM',
+                          'assets/man (1).png', 2, context),
+                      callsTile('Mary', 'Monday, 09:30 AM',
+                          'assets/man (1).png', 6, context),
+                      callsTile('Hellen', 'Today, 09:30 AM',
+                          'assets/man (1).png', 0, context),
+                      callsTile('Louren', 'Today, 09:30 AM',
+                          'assets/man (1).png', 3, context),
+                      callsTile('Tom', 'Sunday, 09:30 AM', 'assets/man (1).png',
+                          0, context),
+                      callsTile('Laura', 'Today, 09:30 AM',
+                          'assets/man (1).png', 0, context),
+                    ],
+                  ),
                 ),
               ))
         ],

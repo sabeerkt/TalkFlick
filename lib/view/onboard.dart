@@ -20,8 +20,8 @@ class _OnBoardState extends State<OnBoard> {
         title: Text(
           'TalkFlick',
           style: const TextStyle(
-            color: Color.fromARGB(255, 148, 39, 39),
-            fontSize: 24,
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -63,8 +63,9 @@ class _OnBoardState extends State<OnBoard> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                               CreateAccount(key: null,)), // Remove the semicolon here
+                          builder: (context) => CreateAccount(
+                                key: null,
+                              )), // Remove the semicolon here
                     );
                   },
                 ),

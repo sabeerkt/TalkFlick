@@ -65,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(height: 16), // Add some spacing
                 Button(
                   color: Colors.black,
-                  name: "CreateAccount",
+                  name: "Get Started",
                   onTap: () {
                     Navigator.push(
                       context,

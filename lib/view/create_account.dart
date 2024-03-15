@@ -31,18 +31,34 @@ class _CreateAccountState extends State<CreateAccount> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Welcome to!\nTalkFlick ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    letterSpacing: 1.2,
-                    color: Colors.white,
-                    height: 1.5,
-                  ),
+                const Column(
+                  children: [
+                    Text(
+                      "Welcome to!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        letterSpacing: 1.2,
+                        color: Color.fromARGB(255, 180, 72,
+                            72), // Set "Welcome" and "to" text color to black
+                        height: 1.5,
+                      ),
+                    ),
+                    Text(
+                      "TalkFlick ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        letterSpacing: 1.2,
+                        color: Colors
+                            .white, // Set the rest of the text color to white
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 40),
                 TextForm(
