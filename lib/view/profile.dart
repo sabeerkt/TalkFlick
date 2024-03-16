@@ -15,13 +15,13 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF292F3F),
+      backgroundColor: const Color(0xFF292F3F),
       appBar: AppBar(
-        backgroundColor: Color(0xFF292F3F),
+        backgroundColor: const Color(0xFF292F3F),
       ),
       body: Column(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 35,
             backgroundImage: AssetImage("assets/google.png"),
           ),

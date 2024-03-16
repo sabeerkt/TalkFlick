@@ -20,6 +20,9 @@ class _ChatRoomState extends State<ChatRoom> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(
+            height: 40,
+          ),
           const Padding(
             padding: EdgeInsets.all(10),
             child: Row(

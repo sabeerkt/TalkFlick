@@ -18,6 +18,9 @@ class _GroupMessageState extends State<GroupMessage> {
       backgroundColor: const Color(0xFF292F3F),
       body: Column(
         children: [
+          SizedBox(
+            height: 40,
+          ),
           const Padding(
             padding: EdgeInsets.all(10),
             child: Row(
@@ -145,7 +148,7 @@ class _GroupMessageState extends State<GroupMessage> {
                                           _descriptionController.text;
                                       // Implement your logic to save the group
                                       // For demonstration, we print the group name and description
-                                     
+
                                       // Close the dialog
                                       Navigator.of(context).pop();
                                     },

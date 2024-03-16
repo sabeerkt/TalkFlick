@@ -29,25 +29,23 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: IndexedStack(
-          index: _currentIndex,
-          children: bottomBarPages,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          backgroundColor: ui.Color.fromARGB(255, 97, 95, 128),
-          selectedItemColor: Color.fromARGB(255, 34, 150, 186),
-          onTap: (i) => setState(() => _currentIndex = i),
-          items: [
-            _buildNavItem("ChatRoom", 'assets/chatroom.png', 0),
-            _buildNavItem("GroupMessage", 'assets/groupmsg.png', 1),
-            _buildNavItem("CallPage", 'assets/phone-call.png', 2),
-            _buildNavItem("Setting", 'assets/setting.png', 3),
-          ],
-        ),
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: bottomBarPages,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        backgroundColor: ui.Color.fromARGB(255, 97, 95, 128),
+        selectedItemColor: Color.fromARGB(255, 34, 150, 186),
+        onTap: (i) => setState(() => _currentIndex = i),
+        items: [
+          _buildNavItem("ChatRoom", 'assets/chatroom.png', 0),
+          _buildNavItem("GroupMessage", 'assets/groupmsg.png', 1),
+          _buildNavItem("CallPage", 'assets/phone-call.png', 2),
+          _buildNavItem("Setting", 'assets/setting.png', 3),
+        ],
       ),
     );
   }

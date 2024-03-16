@@ -100,7 +100,7 @@ class _SettingState extends State<Setting> {
                             backgroundImage: AssetImage("assets/persn 1.png"),
                           ),
                           title: Text(
-                            'CustomUsername',
+                            'Nazrual islam',
                             style: TextStyle(
                               color:
                                   Colors.yellow, // Set your desired text color
@@ -109,7 +109,7 @@ class _SettingState extends State<Setting> {
                             ),
                           ),
                           subtitle: Text(
-                            'CustomBio',
+                            'never give up',
                             style: TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle
