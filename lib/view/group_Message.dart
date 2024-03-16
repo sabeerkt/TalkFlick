@@ -48,103 +48,137 @@ class _GroupMessageState extends State<GroupMessage> {
                           10), // Added border radius for rounded corners
                     ),
                     child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: const Color.fromARGB(0, 230, 224,
-                            224), // Set the background color of the CircleAvatar to transparent
-                        backgroundImage: AssetImage('assets/add-friend.png'),
-                      ),
-                      title: Text(
-                        'Create Groups',
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 3, 3, 3),
-                          fontWeight: FontWeight.bold,
+                        leading: const CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Color.fromARGB(0, 230, 224,
+                              224), // Set the background color of the CircleAvatar to transparent
+                          // backgroundImage: AssetImage('assets/add-friend.png'),
+                          child: Icon(Icons.person_add),
                         ),
-                      ),
-                      onTap: () {
-                        // Show dialog when tapped
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Create Group'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextField(
-                                    controller: _groupNameController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Group Name',
-                                      labelStyle: TextStyle(
-                                          color: Colors
-                                              .black), // Customize label color
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors
-                                                .black), // Customize focused border color
+                        title: const Text(
+                          'Create Groups',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 3, 3, 3),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          // Show dialog when tapped
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  'Create Group',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 50,
+                                        backgroundColor: Colors
+                                            .grey[200], // Light Grey Background
+                                        backgroundImage: const AssetImage(
+                                            'assets/add-friend.png'),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      TextField(
+                                        controller: _groupNameController,
+                                        decoration: InputDecoration(
+                                          labelText: 'Group Name',
+                                          labelStyle: const TextStyle(
+                                            color: Colors.black87,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              width: 2,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      TextField(
+                                        controller: _descriptionController,
+                                        decoration: InputDecoration(
+                                          labelText: 'Description',
+                                          labelStyle: const TextStyle(
+                                            color: Colors.black87,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              width: 2,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      // Close the dialog
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        color: Colors.red,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 10),
-                                  TextField(
-                                    controller: _descriptionController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Description',
-                                      labelStyle: TextStyle(
-                                          color: Colors
-                                              .black), // Customize label color
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors
-                                                .black), // Customize focused border color
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Handle saving functionality
+                                      String groupName =
+                                          _groupNameController.text;
+                                      String description =
+                                          _descriptionController.text;
+                                      // Implement your logic to save the group
+                                      // For demonstration, we print the group name and description
+                                     
+                                      // Close the dialog
+                                      Navigator.of(context).pop();
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
+                                      elevation: 2,
+                                    ),
+                                    child: const Text(
+                                      'Save',
+                                      style: TextStyle(
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
                                 ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    // Close the dialog
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Cancel'),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Handle saving functionality
-                                    String groupName =
-                                        _groupNameController.text;
-                                    String description =
-                                        _descriptionController.text;
-                                    // Implement your logic to save the group
-                                    // For demonstration, we print the group name and description
-                                    print('Group Name: $groupName');
-                                    print('Description: $description');
-                                    // Close the dialog
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Save'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
+                              );
+                            },
+                          );
+                        }),
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Group_message(
+                const Group_message(
                   image: "assets/teamwork.png",
                   name: "Group  1",
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Group_message(
+                const Group_message(
                   image: "assets/group.png",
                   name: "Groups 2",
                 ),

@@ -15,10 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Center(
-              child: const Text(
+              child: Text(
                 "Stay connected with your friends and family",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -45,15 +45,15 @@ class _SplashScreenState extends State<SplashScreen> {
             right: 0,
             child: Column(
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.lock, // Replace with your desired icon
                       color: Colors.white,
                     ),
-                    const SizedBox(width: 8), // Add some spacing
-                    const Text(
+                    SizedBox(width: 8), // Add some spacing
+                    Text(
                       "Secure, private messaging",
                       style: TextStyle(
                         color: Colors.white,
