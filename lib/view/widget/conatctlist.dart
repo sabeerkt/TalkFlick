@@ -10,6 +10,17 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
+  List<String> users = List.generate(10, (index) => "User $index");
+  List<bool> isNew = List.filled(10, false);
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < 3; i++) {
+      isNew[i] = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +37,9 @@ class _ContactListState extends State<ContactList> {
       ),
       backgroundColor: bgColor, // Example color, change as needed
       body: ListView.builder(
-        itemCount: 10, // Number of new users
+        itemCount: users.length,
         itemBuilder: (BuildContext context, int index) {
-          String userName = "User $index";
+          String userName = users[index];
 
           return Padding(
             padding:
@@ -48,26 +59,67 @@ class _ContactListState extends State<ContactList> {
                 leading: const CircleAvatar(
                   backgroundImage: AssetImage("assets/user.png"),
                 ),
-                title: Text(
-                  userName,
-                  style: const TextStyle(color: Colors.white),
+                title: Row(
+                  children: [
+                    Text(
+                      userName,
+                      style: TextStyle(
+                        color: isNew[index] ? Colors.green : Colors.white,
+                      ),
+                    ),
+                    if (isNew[index]) // Display "New" badge if the user is new
+                      Container(
+                        margin: const EdgeInsets.only(left: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'New',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
                 trailing: ElevatedButton(
                   onPressed: () {
-                    // Add button logic here
-                    // For example, you can show a snackbar
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Add $userName as a contact'),
-                      ),
-                    );
+                    _handleChatButtonClick(userName);
                   },
-                  child: const Text('Add'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    elevation: 3,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: Text(
+                    'Chat',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  void _handleChatButtonClick(String userName) {
+    // Implement your logic when the Chat button is clicked.
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Start chatting with $userName'),
       ),
     );
   }

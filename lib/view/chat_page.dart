@@ -3,7 +3,7 @@ import 'package:chat/view/widget/MessageTile.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key,  String? user}) : super(key: key);
+  const ChatPage({Key? key, String? user}) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -25,45 +25,80 @@ class _ChatPageState extends State<ChatPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Row(
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: AssetImage('assets/user.png'),
-            ),
-            SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Martina Wolna",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+        title: GestureDetector(
+          onTap: () {},
+          child: const Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: AssetImage('assets/user.png'),
+              ),
+              SizedBox(width: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Martina Wolna",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  "Active Now",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.green,
+                  Text(
+                    "Active Now",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.green,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.phone),
+            icon: const Icon(
+              Icons.phone,
+              color: Colors.black,
+            ),
             onPressed: () {
               // Handle phone call action
             },
           ),
           IconButton(
-            icon: const Icon(Icons.videocam),
+            icon: const Icon(
+              Icons.videocam,
+              color: Colors.black,
+            ),
             onPressed: () {
               // Handle video call action
+            },
+          ),
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'block',
+                child: ListTile(
+                  leading: Icon(Icons.block),
+                  title: Text('Block User'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'clear',
+                child: ListTile(
+                  leading: Icon(Icons.clear),
+                  title: Text('Clear Chat'),
+                ),
+              ),
+            ],
+            onSelected: (String value) {
+              if (value == 'block') {
+                // Handle block user action
+              } else if (value == 'clear') {
+                // Handle clear chat action
+              }
             },
           ),
         ],
@@ -91,7 +126,7 @@ class _ChatPageState extends State<ChatPage> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
-                            color: const Color.fromARGB(255, 113, 107, 107),
+                            color: Color.fromARGB(255, 234, 234, 234),
                           ),
                           child: Padding(
                             padding:
@@ -103,12 +138,13 @@ class _ChatPageState extends State<ChatPage> {
                                 border:
                                     InputBorder.none, // Remove default border
                                 hintStyle: TextStyle(
-                                    color: Colors.grey[400]), // Hint text color
+                                    color: Colors.grey[600]), // Hint text color
                               ),
                               maxLines:
                                   null, // or any positive integer greater than 1
                               style: const TextStyle(
-                                  color: Colors.white), // Text color
+                                  color: Color.fromARGB(
+                                      255, 0, 0, 0)), // Text color
                             ),
                           ),
                         ),
@@ -136,7 +172,7 @@ class _ChatPageState extends State<ChatPage> {
                                 return [
                                   {
                                     'label': 'Camera',
-                                    'image': 'assets/google.png'
+                                    'image': 'assets/camera.png'
                                   },
                                   {
                                     'label': 'Video',

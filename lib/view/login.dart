@@ -1,3 +1,6 @@
+import 'package:chat/view/create_account.dart';
+import 'package:chat/view/widget/bottombar.dart';
+import 'package:chat/view/widget/logintext.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/constant/const.dart';
 import 'package:chat/view/forgot_password.dart';
@@ -6,6 +9,7 @@ import 'package:chat/view/spalsh.dart';
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:chat/view/widget/tile.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: bgColor,
+        automaticallyImplyLeading: false,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -40,19 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Welcome back!\nTalkFlick to see you, Again!",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                              letterSpacing: 1.2,
-                              color: Colors.white,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
+                        LoginText(),
                         const SizedBox(height: 25),
                         Stack(
                           alignment: Alignment.center,
@@ -112,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             if (email.isEmpty || password.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text('Please fill in all fields.'),
                                   duration: Duration(seconds: 2),
                                   behavior: SnackBarBehavior.floating,
@@ -122,11 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                               setState(() {
                                 _isLoggingIn = true;
                               });
-                              Future.delayed(Duration(seconds: 2), () {
+                              Future.delayed(const Duration(seconds: 2), () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const SplashScreen(),
+                                    builder: (context) => const BottomBar(),
                                   ),
                                 );
                               });
@@ -138,8 +131,8 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white,
                           thickness: 2,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
                           child: Text(
                             "or login with",
                             textAlign: TextAlign.center,
@@ -158,17 +151,52 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 );
                               },
-                              child: SqureTile(
-                                imagePath: "assets/telephone-call.png",
+                              child: const SqureTile(
+                                imagePath: "assets/otppp.png",
                               ),
                             ),
-                            SizedBox(width: 10),
-                            SqureTile(
+                            const SizedBox(width: 10),
+                            const SqureTile(
                               imagePath: "assets/gmail.png",
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CreateAccount(),
+                                  ),
+                                );
+                              },
+                              child: const Text.rich(
+                                TextSpan(
+                                  text: 'Don’t have an account? ',
+                                  style: TextStyle(
+                                    color:
+                                        Colors.white, // Set text color to white
+                                    fontSize: 15, // Adjust font size as needed
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Register Now',
+                                      style: TextStyle(
+                                        color:
+                                            Colors.red, // Set text color to red
+                                        fontWeight: FontWeight
+                                            .bold, // Make the text bold
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),

@@ -38,7 +38,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   "Martina Wolna",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 25,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -47,31 +47,32 @@ class _ChatRoomState extends State<ChatRoom> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 27, 26, 26),
-                    ),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color.fromARGB(255, 247, 247, 247),
-                      hintText: "Search...",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.grey,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 27, 26, 26),
                       ),
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset("assets/searchneew.png"),
+                      decoration: InputDecoration(
+                        hintText: "Search...",
+                        border: InputBorder.none,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset("assets/searchneew.png"),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
