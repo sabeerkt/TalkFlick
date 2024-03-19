@@ -1,5 +1,5 @@
 import 'package:chat/view/onboard.dart';
-import 'package:chat/view/widget/bottombar.dart';
+
 import 'package:chat/view/widget/button.dart';
 import 'package:flutter/material.dart';
 

@@ -18,7 +18,7 @@ class _GroupMessageState extends State<GroupMessage> {
       backgroundColor: const Color(0xFF292F3F),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           const Padding(
@@ -141,15 +141,7 @@ class _GroupMessageState extends State<GroupMessage> {
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      // Handle saving functionality
-                                      String groupName =
-                                          _groupNameController.text;
-                                      String description =
-                                          _descriptionController.text;
-                                      // Implement your logic to save the group
-                                      // For demonstration, we print the group name and description
-
-                                      // Close the dialog
+                                      
                                       Navigator.of(context).pop();
                                     },
                                     style: ElevatedButton.styleFrom(

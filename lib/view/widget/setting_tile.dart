@@ -1,4 +1,4 @@
-import 'package:chat/view/profile.dart';
+
 import 'package:flutter/material.dart';
 
 class SettingTile extends StatefulWidget {

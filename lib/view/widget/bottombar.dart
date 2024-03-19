@@ -1,7 +1,6 @@
 // Import the 'dart:ui' library to use the 'Image' class.
 import 'dart:ui' as ui;
 
-import 'package:chat/constant/const.dart';
 import 'package:chat/view/call.dart';
 import 'package:chat/view/chat_room.dart';
 import 'package:chat/view/group_Message.dart';

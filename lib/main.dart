@@ -1,4 +1,4 @@
-import 'package:chat/view/onboard.dart';
+
 import 'package:chat/view/spalsh.dart';
 
 

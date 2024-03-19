@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:chat/constant/const.dart';
 import 'package:chat/view/forgot_password.dart';
 import 'package:chat/view/phone.dart';
-import 'package:chat/view/spalsh.dart';
+
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:chat/view/widget/tile.dart';
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        LoginText(),
+                        const LoginText(),
                         const SizedBox(height: 25),
                         Stack(
                           alignment: Alignment.center,
