@@ -16,6 +16,7 @@ class _OnBoardState extends State<OnBoard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         // ignore: prefer_const_constructors
         title: Text(
           'TalkFlick',

@@ -20,7 +20,7 @@ class _ChatRoomState extends State<ChatRoom> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           const Padding(
@@ -54,16 +54,16 @@ class _ChatRoomState extends State<ChatRoom> {
               ),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: TextField(
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Color.fromARGB(255, 27, 26, 26),
                       ),
                       decoration: InputDecoration(
                         hintText: "Search...",
                         border: InputBorder.none,
                         contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
+                            EdgeInsets.symmetric(horizontal: 16),
                       ),
                     ),
                   ),

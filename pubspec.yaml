@@ -39,6 +39,14 @@ dependencies:
   provider: ^6.1.2
   google_fonts: ^6.2.1
   image_picker: ^1.0.7
+  firebase_auth: ^4.17.9
+  firebase_core: ^2.27.1
+  cloud_firestore: ^4.15.9
+  firebase_storage: ^11.6.10
+  pinput: ^4.0.0
+  country: ^4.1.3
+  country_picker: ^2.0.25
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

@@ -20,9 +20,7 @@ class _SettingState extends State<Setting> {
           actions: [
             TextButton(
               onPressed: () {
-                // Implement the delete account logic here
-                // You can add your own logic to delete the account
-                // For now, let's just close the dialog
+                
                 Navigator.of(context).pop();
               },
               child: const Text('Yes'),

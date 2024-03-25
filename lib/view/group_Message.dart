@@ -70,24 +70,29 @@ class _GroupMessageState extends State<GroupMessage> {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text(
-                                  'Create Group',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
-                                content: SingleChildScrollView(
+                                child: Container(
+                                  padding: const EdgeInsets.all(20.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
+                                      const Text(
+                                        'Create Group',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
                                       CircleAvatar(
                                         radius: 50,
                                         backgroundColor: Colors
                                             .grey[200], // Light Grey Background
-                                        backgroundImage: const AssetImage(
-                                            'assets/add-friend.png'),
+                                        backgroundImage:
+                                            const AssetImage('assets/add-friend.png'),
                                       ),
                                       const SizedBox(height: 20),
                                       TextField(
@@ -123,40 +128,50 @@ class _GroupMessageState extends State<GroupMessage> {
                                           ),
                                         ),
                                       ),
+                                      const SizedBox(height: 20),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              // Close the dialog
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              // Handle Save action
+                                              Navigator.of(context).pop();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              backgroundColor: Theme.of(context)
+                                                  .primaryColor,
+                                              elevation: 2,
+                                            ),
+                                            child: const Text(
+                                              'Save',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      // Close the dialog
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      
-                                      Navigator.of(context).pop();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Theme.of(context).primaryColor,
-                                      elevation: 2,
-                                    ),
-                                    child: const Text(
-                                      'Save',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               );
                             },
                           );

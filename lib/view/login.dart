@@ -1,16 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:chat/controller/auth_provider.dart';
 import 'package:chat/view/create_account.dart';
+import 'package:chat/view/phone_auth.dart';
 import 'package:chat/view/widget/bottombar.dart';
 import 'package:chat/view/widget/logintext.dart';
-import 'package:flutter/material.dart';
-import 'package:chat/constant/const.dart';
 import 'package:chat/view/forgot_password.dart';
-import 'package:chat/view/phone.dart';
-
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:chat/view/widget/tile.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
+import 'package:chat/constant/const.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -96,35 +96,55 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Button(
-                          color: Colors.black,
-                          name: "Login",
-                          onTap: () {
-                            String email = emailController.text.trim();
-                            String password = passwordController.text.trim();
+                        Consumer<AuthProviders>(
+                          builder: (context, value, child) => Button(
+                            color: Colors.black,
+                            name: "Login",
+                            onTap: () {
+                              String email = emailController.text.trim();
+                              String password = passwordController.text.trim();
 
-                            if (email.isEmpty || password.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please fill in all fields.'),
-                                  duration: Duration(seconds: 2),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            } else {
-                              setState(() {
-                                _isLoggingIn = true;
-                              });
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const BottomBar(),
+                              // Regular expression for email validation
+                              RegExp emailRegExp =
+                                  RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                              if (!emailRegExp.hasMatch(email)) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Invalid email format.'),
+                                    duration: Duration(seconds: 2),
+                                    behavior: SnackBarBehavior.floating,
                                   ),
                                 );
-                              });
-                            }
-                          },
+                                return;
+                              }
+
+                              if (email.isEmpty || password.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please fill in all fields.'),
+                                    duration: Duration(seconds: 2),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              } else {
+                                value.signInWithEmail(email, password, context);
+
+                                setState(() {
+                                  _isLoggingIn = true;
+                                });
+
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const BottomBar(),
+                                    ),
+                                  );
+                                });
+                              }
+                            },
+                          ),
                         ),
                         const SizedBox(height: 10),
                         const Divider(
@@ -147,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const PhoneOtp(),
+                                    builder: (context) => PhoneAuthPage(),
                                   ),
                                 );
                               },
@@ -156,8 +176,21 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const SqureTile(
-                              imagePath: "assets/gmail.png",
+                            Consumer<AuthProviders>(
+                              builder: (context, value, child) => InkWell(
+                                onTap: () async {
+                                  await value.signUpWithGoogle();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const BottomBar(),
+                                    ),
+                                  );
+                                },
+                                child: const SqureTile(
+                                  imagePath: "assets/gmail.png",
+                                ),
+                              ),
                             ),
                           ],
                         ),

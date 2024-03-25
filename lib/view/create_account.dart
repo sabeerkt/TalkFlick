@@ -1,9 +1,11 @@
+import 'package:chat/controller/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/view/widget/button.dart';
 import 'package:chat/view/widget/textform.dart';
 import 'package:lottie/lottie.dart'; // Import Lottie package
 import 'package:chat/view/login.dart'; // Assuming LoginPage is imported from this path
 import 'package:chat/constant/const.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -83,52 +85,80 @@ class _CreateAccountState extends State<CreateAccount> {
                       controller: confirmPasswordController,
                     ),
                     const SizedBox(height: 10),
-                    Button(
-                      color: Colors.black,
-                      name: "Create Account",
-                      onTap: () {
-                        String firstName = firstNameController.text.trim();
-                        String lastName = lastNameController.text.trim();
-                        String email = emailController.text.trim();
-                        String password = passwordController.text.trim();
-                        String confirmPassword =
-                            confirmPasswordController.text.trim();
+                    Consumer<AuthProviders>(
+                      builder: (context, value, child) => Button(
+                        color: Colors.black,
+                        name: "Create Account",
+                        onTap: () {
+                          String firstName = firstNameController.text.trim();
+                          String lastName = lastNameController.text.trim();
+                          String email = emailController.text.trim();
+                          String password = passwordController.text.trim();
+                          String confirmPassword =
+                              confirmPasswordController.text.trim();
 
-                        if (firstName.isEmpty ||
-                            lastName.isEmpty ||
-                            email.isEmpty ||
-                            password.isEmpty ||
-                            confirmPassword.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Please fill in all fields.'),
-                              duration: Duration(seconds: 2),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
-                        } else if (password != confirmPassword) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Passwords do not match.'),
-                              duration: Duration(seconds: 2),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
-                        } else {
-                          setState(() {
-                            _isCreatingAccount = true;
-                          });
-                          // Simulate a sign-up process (replace this with actual sign-up logic)
-                          Future.delayed(Duration(seconds: 2), () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
+                          if (firstName.isEmpty ||
+                              lastName.isEmpty ||
+                              email.isEmpty ||
+                              password.isEmpty ||
+                              confirmPassword.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Please fill in all fields.'),
+                                duration: Duration(seconds: 2),
+                                behavior: SnackBarBehavior.floating,
                               ),
                             );
-                          });
-                        }
-                      },
+                          } else if (password != confirmPassword) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Passwords do not match.'),
+                                duration: Duration(seconds: 2),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              _isCreatingAccount = true;
+                            });
+                            // Call signUpWithEmail with parameters
+                            value
+                                .signUpWithEmail(
+                                    email, password, "$firstName $lastName")
+                                .then((result) {
+                              if (result != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Failed to create account.'),
+                                    duration: Duration(seconds: 2),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              }
+                              setState(() {
+                                _isCreatingAccount = false;
+                              });
+                            }).catchError((error) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(error.toString()),
+                                  duration: Duration(seconds: 2),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                              setState(() {
+                                _isCreatingAccount = false;
+                              });
+                            });
+                          }
+                        },
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Column(
