@@ -88,8 +88,7 @@ class AuthService {
                   builder: (context) => OtpScreen(
                       verificationid: verificationcode,
                       email: email,
-                      name: name
-                      ),
+                      name: name),
                 ));
           },
           codeAutoRetrievalTimeout: (String codeAutoRetrievalTimeout) {});
@@ -119,8 +118,6 @@ class AuthService {
       throw Exception(e);
     }
   }
-
-  
 
   signout() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();

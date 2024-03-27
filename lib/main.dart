@@ -1,5 +1,6 @@
 import 'package:chat/controller/auth_provider.dart';
 import 'package:chat/firebase_options.dart';
+import 'package:chat/service/auth/auth_gate.dart';
 import 'package:chat/view/spalsh.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,11 +18,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-       ChangeNotifierProvider(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
           create: (context) => AuthProviders(),
         ),
-    ],
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const SplashScreen(),
+        home: const AuthGate(),
       ),
     );
   }

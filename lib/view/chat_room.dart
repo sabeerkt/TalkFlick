@@ -1,9 +1,11 @@
 import 'package:chat/constant/const.dart';
+import 'package:chat/controller/auth_provider.dart';
 import 'package:chat/view/chat_page.dart';
 import 'package:chat/view/widget/conatctlist.dart';
 import 'package:chat/view/widget/list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChatRoom extends StatefulWidget {
   const ChatRoom({Key? key}) : super(key: key);
@@ -16,6 +18,16 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: bgColor,
+      //   leading: Consumer<AuthProviders>(
+      //     builder: (context, value, child) => IconButton(
+      //         onPressed: () {
+      //           value.signOut();
+      //         },
+      //         icon: Icon(Icons.exit_to_app)),
+      //   ),
+      // ),
       backgroundColor: bgColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -62,8 +74,7 @@ class _ChatRoomState extends State<ChatRoom> {
                       decoration: InputDecoration(
                         hintText: "Search...",
                         border: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 16),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
                       ),
                     ),
                   ),
