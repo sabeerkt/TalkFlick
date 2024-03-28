@@ -13,7 +13,7 @@ class FirebaseProvider extends ChangeNotifier {
   ScrollController scrollController = ScrollController();
 
   List<UserModel> getAllUsers() {
-    service.firestore.collection('users').snapshots().listen((user) {
+    service.firestore.collection('user').snapshots().listen((user) {
       users = user.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
       loadUsers();
       notifyListeners();
@@ -66,7 +66,7 @@ class FirebaseProvider extends ChangeNotifier {
 
   searchUser(String name) async {
     service.firestore
-        .collection("users")
+        .collection("user")
         .where("name", isGreaterThanOrEqualTo: name.toLowerCase())
         .snapshots()
         .listen((event) {

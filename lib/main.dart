@@ -1,4 +1,6 @@
 import 'package:chat/controller/auth_provider.dart';
+import 'package:chat/controller/basic_provider.dart';
+import 'package:chat/controller/firbase_provider.dart';
 import 'package:chat/firebase_options.dart';
 import 'package:chat/service/auth/auth_gate.dart';
 import 'package:chat/view/spalsh.dart';
@@ -22,6 +24,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthProviders(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FirebaseProvider(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => BasicProvider(),
         ),
       ],
       child: MaterialApp(

@@ -1,20 +1,41 @@
 import 'package:chat/constant/const.dart';
+import 'package:chat/controller/basic_provider.dart';
+import 'package:chat/controller/firbase_provider.dart';
+import 'package:chat/model/user_model.dart';
+import 'package:chat/service/auth/auth_service.dart';
+import 'package:chat/service/chat/chat_service.dart';
 import 'package:chat/view/widget/MessageTile.dart';
+import 'package:chat/view/widget/imageselctrdlg.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, String? user}) : super(key: key);
+  const ChatPage({Key? key, required this.user}) : super(key: key);
+  final UserModel user;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  TextEditingController _messageController = TextEditingController();
+  TextEditingController messagecontroller = TextEditingController();
+  AuthService service = AuthService();
+  void initState() {
+    super.initState();
+
+    final currentUserId = service.firebaseAuth.currentUser!.uid;
+    if (widget.user.uid != null) {
+      Provider.of<FirebaseProvider>(context, listen: false)
+          .getMessages(currentUserId, widget.user.uid!);
+    }
+  }
+
   List<String> messages = [];
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -27,25 +48,25 @@ class _ChatPageState extends State<ChatPage> {
         ),
         title: GestureDetector(
           onTap: () {},
-          child: const Row(
+          child: Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 20,
                 backgroundImage: AssetImage('assets/user.png'),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Martina Wolna",
-                    style: TextStyle(
+                    widget.user.name!,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Active Now",
                     style: TextStyle(
                       fontSize: 12,
@@ -106,12 +127,9 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) => MessageTile(
-                message: messages[index],
-                isCurrentUser: index % 2 == 0,
-              ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: ChatBubble(service: service, size: size),
             ),
           ),
           Padding(
@@ -119,108 +137,80 @@ class _ChatPageState extends State<ChatPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Color.fromARGB(255, 234, 234, 234),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: TextField(
-                              controller: _messageController,
-                              decoration: InputDecoration(
-                                hintText: 'Type your message...',
-                                border:
-                                    InputBorder.none, // Remove default border
-                                hintStyle: TextStyle(
-                                    color: Colors.grey[600]), // Hint text color
-                              ),
-                              maxLines:
-                                  null, // or any positive integer greater than 1
-                              style: const TextStyle(
-                                  color: Color.fromARGB(
-                                      255, 0, 0, 0)), // Text color
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        top: 0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            PopupMenuButton<String>(
-                              icon: const Icon(Icons.attach_file),
-                              onSelected: (value) {
-                                // Handle menu item selection
-                                if (value == 'camera') {
-                                  // Handle camera action
-                                } else if (value == 'video') {
-                                  // Handle video action
-                                } else if (value == 'location') {
-                                  // Handle location action
-                                }
-                              },
-                              itemBuilder: (BuildContext context) {
-                                return [
-                                  {
-                                    'label': 'Camera',
-                                    'image': 'assets/camera.png'
-                                  },
-                                  {
-                                    'label': 'Video',
-                                    'image': 'assets/video-calling.png'
-                                  },
-                                  {
-                                    'label': 'Location',
-                                    'image': 'assets/map.png'
-                                  },
-                                ].map((Map<String, dynamic> choice) {
-                                  return PopupMenuItem<String>(
-                                    value: choice['label'].toLowerCase(),
-                                    child: ListTile(
-                                      leading: Image.asset(
-                                        choice['image'],
-                                        width:
-                                            24.0, // Adjust the width as needed
-                                        height:
-                                            24.0, // Adjust the height as needed
-                                      ),
-                                      title: Text(choice['label']),
-                                    ),
-                                  );
-                                }).toList();
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.send),
+                  child: Positioned(
+                    bottom: 10,
+                    left: 5,
+                    right: 5,
+                    child: Container(
+                      // chating field
+                      width: size.width * 0.9,
+                      height: size.height * 0.08,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Row(
+                        children: [
+                          IconButton(
                               onPressed: () {
-                                if (_messageController.text.isNotEmpty) {
-                                  setState(() {
-                                    messages.add(_messageController.text);
-                                    _messageController.clear();
-                                  });
-                                }
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    final pro =
+                                        Provider.of<BasicProvider>(context);
+                                    return ImageSelectorDialog(
+                                      pro: pro,
+                                      size: size,
+                                      recieverId: widget.user.uid!,
+                                    );
+                                  },
+                                );
                               },
+                              icon: const Icon(Icons.abc)),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black, fontSize: 18),
+                                controller: messagecontroller,
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    filled: true,
+                                    fillColor:
+                                        const Color.fromRGBO(239, 237, 247, 1)),
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                sendMessage();
+                              },
+                              icon: const Icon(
+                                Icons.send_rounded,
+                                color: Color.fromARGB(255, 5, 5, 5),
+                                size: 30,
+                              ))
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  sendMessage() async {
+    if (messagecontroller.text.isNotEmpty) {
+      await ChatService()
+          .sendMessage(widget.user.uid!, messagecontroller.text, "text");
+      messagecontroller.clear();
+    }
   }
 }

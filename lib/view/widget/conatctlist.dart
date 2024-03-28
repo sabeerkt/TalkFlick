@@ -46,14 +46,14 @@ class _ContactListState extends State<ContactList> {
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChatPage(
-                      user: '',
-                    ),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const ChatPage(
+                //       user: userdetails,
+                //     ),
+                //   ),
+                // );
               },
               child: ListTile(
                 leading: const CircleAvatar(
