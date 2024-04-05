@@ -1,7 +1,15 @@
+import 'package:chat/model/group_model.dart';
+import 'package:chat/model/user_model.dart';
+import 'package:chat/view/chat_page.dart';
+import 'package:chat/view/grpchatpage.dart';
 import 'package:flutter/material.dart';
 
 class Group_message extends StatefulWidget {
-  const Group_message({Key? key, required this.name, required this.image}) : super(key: key);
+  const Group_message({
+    Key? key,
+    required this.name,
+    required this.image,
+  }) : super(key: key);
 
   final String name;
   final String image;
@@ -26,7 +34,17 @@ class _Group_messageState extends State<Group_message> {
         ),
       ),
       onTap: () {
-        // Handle the onTap action
+        
+        UserModel user = UserModel(name: widget.name);
+       //  UserModel uid = UserModel(name: widget.name);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GroupchatPage(user: user,
+            groupId:widget.name ,
+            ),
+            ));
       },
     );
   }

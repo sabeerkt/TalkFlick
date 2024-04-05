@@ -1,5 +1,11 @@
+import 'package:chat/controller/firbase_provider.dart';
+import 'package:chat/model/group_model.dart';
+import 'package:chat/service/group/group_service.dart';
 import 'package:chat/view/widget/grp_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GroupMessage extends StatefulWidget {
   const GroupMessage({Key? key}) : super(key: key);
@@ -9,6 +15,12 @@ class GroupMessage extends StatefulWidget {
 }
 
 class _GroupMessageState extends State<GroupMessage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<FirebaseProvider>(context, listen: false).fetchGroups();
+  }
+
   TextEditingController _groupNameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
@@ -91,8 +103,8 @@ class _GroupMessageState extends State<GroupMessage> {
                                         radius: 50,
                                         backgroundColor: Colors
                                             .grey[200], // Light Grey Background
-                                        backgroundImage:
-                                            const AssetImage('assets/add-friend.png'),
+                                        backgroundImage: const AssetImage(
+                                            'assets/add-friend.png'),
                                       ),
                                       const SizedBox(height: 20),
                                       TextField(
@@ -149,7 +161,10 @@ class _GroupMessageState extends State<GroupMessage> {
                                           ElevatedButton(
                                             onPressed: () {
                                               // Handle Save action
-                                              Navigator.of(context).pop();
+                                              DatabaseService().createGroup(
+                                                  FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                  _groupNameController.text);
                                             },
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
@@ -181,17 +196,25 @@ class _GroupMessageState extends State<GroupMessage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Group_message(
-                  image: "assets/teamwork.png",
-                  name: "Group  1",
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Group_message(
-                  image: "assets/group.png",
-                  name: "Groups 2",
-                ),
+                Consumer<FirebaseProvider>(
+                  builder: (context, value, child) {
+                    return InkWell(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: value.grouplist.length,
+                        itemBuilder: (context, index) {
+                          final GroupModel group = value.grouplist[index];
+                          return Group_message(
+                            
+                            image: "assets/teamwork.png",
+                            name: group.groupName!,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           )

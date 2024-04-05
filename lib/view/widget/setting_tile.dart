@@ -6,13 +6,13 @@ class SettingTile extends StatefulWidget {
     Key? key,
     required this.name,
     required this.image,
-    required this.subtile,
+     this.subtile,
     this.onTap,
   }) : super(key: key);
 
   final String name;
   final String image;
-  final String subtile;
+  final String? subtile;
   final VoidCallback? onTap;
 
   @override
@@ -36,7 +36,7 @@ class _SettingTileState extends State<SettingTile> {
         ),
       ),
       subtitle: Text(
-        widget.subtile,
+        widget.subtile!,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

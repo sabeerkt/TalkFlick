@@ -1,6 +1,9 @@
+import 'package:chat/controller/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/view/profile.dart';
 import 'package:chat/view/widget/setting_tile.dart';
+import 'package:provider/provider.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -20,7 +23,6 @@ class _SettingState extends State<Setting> {
           actions: [
             TextButton(
               onPressed: () {
-                
                 Navigator.of(context).pop();
               },
               child: const Text('Yes'),
@@ -134,12 +136,12 @@ class _SettingState extends State<Setting> {
                     child: const SettingTile(
                       image: "assets/user.png",
                       name: "Account",
-                      subtile: "change username  profile  Bio ",
+                      subtile: "Change Username  Profile  Bio ",
                     ),
                   ),
                   const SettingTile(
                     image: "assets/help.png",
-                    name: "help",
+                    name: "HelpCentre",
                     subtile: "HelpCentre ",
                   ),
                   SettingTile(
@@ -148,6 +150,11 @@ class _SettingState extends State<Setting> {
                     subtile: "Delete",
                     onTap: _showDeleteAccountDialog,
                   ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Provider.of<AuthProviders>(context, listen: false).signOut();
+                      },
+                      child: Text("Logout "))
                 ],
               ),
             ),

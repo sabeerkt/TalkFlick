@@ -1,3 +1,4 @@
+import 'package:chat/model/group_model.dart';
 import 'package:chat/model/message_model.dart';
 import 'package:chat/model/user_model.dart';
 import 'package:chat/service/auth/auth_service.dart';
@@ -11,6 +12,21 @@ class FirebaseProvider extends ChangeNotifier {
   List<Message> messages = [];
   AuthService service = AuthService();
   ScrollController scrollController = ScrollController();
+  List<GroupModel> grouplist = [];
+
+  List<GroupModel> fetchGroups() {
+    try {
+      service.firestore.collection("groups").snapshots().listen((group) {
+        grouplist = group.docs
+            .map((group) => GroupModel.fromJson(group.data()))
+            .toList();
+        notifyListeners();
+      });
+      return grouplist;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
   List<UserModel> getAllUsers() {
     service.firestore.collection('user').snapshots().listen((user) {

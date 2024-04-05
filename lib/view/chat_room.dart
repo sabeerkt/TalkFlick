@@ -24,6 +24,8 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = Provider.of<AuthProviders>(context).user;
+
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: bgColor,
@@ -86,9 +88,10 @@ class _ChatRoomState extends State<ChatRoom> {
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.circular(30)),
                             filled: true,
-                            fillColor: const Color.fromRGBO(102, 106, 179, 1),
+                            // fillColor: const Color.fromRGBO(102, 106, 179, 1),
                             hintText: 'Search ',
-                            prefixIcon: const Icon(Icons.abc)),
+                            prefixIcon: const Icon(Icons.abc )
+                            ),
                       ),
                     ),
                   ),
