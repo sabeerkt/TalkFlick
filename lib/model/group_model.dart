@@ -8,13 +8,13 @@ class GroupModel {
   String? recentMessageSender;
 
   GroupModel(
-      {required this.admin,
-      required this.groupIcon,
-      required this.groupId,
-      required this.groupName,
-      required this.members,
-      required this.recentMessage,
-      required this.recentMessageSender});
+      { this.admin,
+       this.groupIcon,
+       this.groupId,
+       this.groupName,
+       this.members,
+       this.recentMessage,
+       this.recentMessageSender});
 
   factory GroupModel.fromJson(Map<String, dynamic> json) {
     List members = [];

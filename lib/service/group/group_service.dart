@@ -1,4 +1,5 @@
 import 'package:chat/model/group_model.dart';
+import 'package:chat/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -39,32 +40,53 @@ class DatabaseService {
   getUserGroup() async {
     return userCollection.doc(uid).snapshots();
   }
+Future createGroup(String id, String userName, String groupName) async {
+  final GroupModel group = GroupModel(
+      admin: id,
+      groupIcon: "",
+      groupId: "",
+      groupName: groupName,
+      members: [],
+      recentMessage: "",
+      recentMessageSender: "");
+  DocumentReference groupDocumentReference =
+      await groupCollection.add(group.toJson());
+  await groupDocumentReference.update({
+    "members": FieldValue.arrayUnion([id]),
+    "groupId": groupDocumentReference.id,
+  });
 
-  //creating a group
-  Future createGroup(String id, String groupName) async {
-    final GroupModel group = GroupModel(
-        admin: "${id}",
-        groupIcon: "",
-        groupId: "",
-        groupName: groupName,
-        members: [],
-        recentMessage: "",
-        recentMessageSender: "");
-    DocumentReference groupdocumentReference =
-        await groupCollection.add(group.toJson());
-    await groupdocumentReference.update({
-      "members": FieldValue.arrayUnion(["${uid}"]),
-      "groupId": groupdocumentReference.id,
-    });
+  DocumentReference userDocumentReference = userCollection.doc(id);
+  return await userDocumentReference.update({
+    "groups": FieldValue.arrayUnion([groupDocumentReference.id]),
+  });
+}
 
-    DocumentReference userDocumentRefernce = userCollection.doc(uid);
-    return await userDocumentRefernce.update({
-      "groups":
-          FieldValue.arrayUnion(["${groupdocumentReference.id}_$groupName"])
-    });
+
+  Future<void> sendMessagess({
+    required String groupId,
+    required Map<String, dynamic> chatMessageData,
+  }) async {
+    try {
+      // Update the message
+      await groupCollection
+          .doc(groupId)
+          .collection("messages")
+          .add(chatMessageData);
+
+      // Update recent message details for the group
+      await groupCollection.doc(groupId).update({
+        "recentMessage": chatMessageData['message'],
+        "recentMessageSender": chatMessageData['sender'],
+        "recentMessageTime": chatMessageData['time'].toString(),
+      });
+    } catch (e) {
+      // Handle errors, such as document not found
+      print("Error updating message: $e");
+    }
   }
 
-  getChats(String groupId) async {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getChats(String groupId) {
     return groupCollection
         .doc(groupId)
         .collection("messages")
@@ -103,6 +125,29 @@ class DatabaseService {
   }
 
   //toggling group join or exit
+  Future<void> addUserToGroup(
+      {required String groupId, required UserModel user}) async {
+    try {
+      // Update the group document to add the user to the 'members' array
+      await FirebaseFirestore.instance
+          .collection("groups")
+          .doc(groupId)
+          .update({
+        "members": FieldValue.arrayUnion([user.uid]),
+      });
+
+      // Update the user document to add the group to their 'groups' array
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .update({
+        "groups": FieldValue.arrayUnion([groupId]),
+      });
+    } catch (e) {
+      print("Error adding user to group: $e");
+      throw Exception("Failed to add user to group");
+    }
+  }
 
   Future toggleGroupJoin(
       String groupId, String userName, String groupName) async {
@@ -130,14 +175,5 @@ class DatabaseService {
         "members": FieldValue.arrayUnion(["${uid}_$userName"])
       });
     }
-  }
-
-  sendMessagess(String groupId, Map<String, dynamic> chatMessageData) async {
-    groupCollection.doc(groupId).collection("messages").add(chatMessageData);
-    groupCollection.doc(groupId).update({
-      "recentMessage": chatMessageData['message'],
-      "recentMessageSender": chatMessageData['sender'],
-      "recentMessageTime": chatMessageData['time'].toString(),
-    });
   }
 }

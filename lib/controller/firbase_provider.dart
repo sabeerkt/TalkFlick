@@ -98,4 +98,6 @@ class FirebaseProvider extends ChangeNotifier {
           scrollController.jumpTo(scrollController.position.maxScrollExtent);
         }
       });
+
+  getUserById(String s) {}
 }

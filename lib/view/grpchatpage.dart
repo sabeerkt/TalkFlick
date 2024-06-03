@@ -1,13 +1,13 @@
 import 'package:chat/constant/const.dart';
 import 'package:chat/controller/basic_provider.dart';
 import 'package:chat/controller/firbase_provider.dart';
-import 'package:chat/model/group_model.dart';
+
 import 'package:chat/model/user_model.dart';
 import 'package:chat/service/auth/auth_service.dart';
-import 'package:chat/service/chat/chat_service.dart';
+
 import 'package:chat/service/group/group_service.dart';
-import 'package:chat/view/grpchat/widgets/msg_tile.dart';
-import 'package:chat/view/widget/MessageTile.dart';
+
+import 'package:chat/view/widget/group_bubble.dart';
 import 'package:chat/view/widget/imageselctrdlg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -24,24 +24,26 @@ class GroupchatPage extends StatefulWidget {
   final String groupId;
 
   @override
-  State<GroupchatPage> createState() => _ChatPageState();
+  State<GroupchatPage> createState() => _GroupchatPageState();
 }
 
-class _ChatPageState extends State<GroupchatPage> {
+class _GroupchatPageState extends State<GroupchatPage> {
   Stream<QuerySnapshot>? chats;
   TextEditingController messagecontroller = TextEditingController();
   AuthService service = AuthService();
+
+  @override
   void initState() {
     super.initState();
-
-    final currentUserId = service.firebaseAuth.currentUser!.uid;
-    if (widget.user.uid != null) {
-      Provider.of<FirebaseProvider>(context, listen: false)
-          .getMessages(currentUserId, widget.user.uid!);
-    }
+    initializeChats();
   }
 
-  List<String> messages = [];
+  Future<void> initializeChats() async {
+    final value = await DatabaseService().getChats(widget.groupId);
+    setState(() {
+      chats = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class _ChatPageState extends State<GroupchatPage> {
             children: [
               const CircleAvatar(
                 radius: 20,
-                //backgroundImage: AssetImage('assets/user.png'),
+                backgroundImage: AssetImage('assets/user.png'),
               ),
               const SizedBox(width: 8),
               Flexible(
@@ -119,6 +121,13 @@ class _ChatPageState extends State<GroupchatPage> {
                 ),
               ),
               const PopupMenuItem<String>(
+                value: 'add_user',
+                child: ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Add User'),
+                ),
+              ),
+              const PopupMenuItem<String>(
                 value: 'clear',
                 child: ListTile(
                   leading: Icon(Icons.clear),
@@ -126,63 +135,148 @@ class _ChatPageState extends State<GroupchatPage> {
                 ),
               ),
             ],
-            onSelected: (String value) {
+            onSelected: (String value) async {
               if (value == 'block') {
                 // Handle block user action
               } else if (value == 'clear') {
                 // Handle clear chat action
+              } else if (value == 'add_user') {
+                // Fetch all users
+                final userpro =
+                    Provider.of<FirebaseProvider>(context, listen: false)
+                        .getAllUsers();
+
+                // Show dialog to select user
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Select User to Add'),
+                    content: Container(
+                      width: double.minPositive,
+                      height: 300.0,
+                      child: ListView.builder(
+                        itemCount: userpro.length,
+                        itemBuilder: (context, index) {
+                          final user = userpro[index];
+                          return ListTile(
+                            title: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(user.name ?? ""),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Add the selected user to the group
+                                    DatabaseService().addUserToGroup(
+                                        groupId: widget.groupId, user: user);
+                                    Navigator.pop(context); // Close dialog
+                                  },
+                                  child: Text("Add"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
               }
             },
           ),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          chatMessages(),
-          Container(
-            alignment: Alignment.bottomCenter,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              width: MediaQuery.of(context).size.width,
-              color: Colors.grey,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: messagecontroller,
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        hintText: "Send a message",
-                        hintStyle: TextStyle(color: Colors.white, fontSize: 16),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      sendMessage();
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.send,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: StreamBuilder(
+                stream: chats,
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? ListView.builder(
+                          itemCount: snapshot.data?.docs.length,
+                          itemBuilder: (context, index) {
+                            return MessageTile(
+                              message: snapshot.data?.docs[index]['message'],
+                              sender: snapshot.data?.docs[index]['sender'] ??
+                                  "", // Use empty string if sender is null
+                              sendByMe: widget.user.name ==
+                                  snapshot.data?.docs[index]['sender'],
+                              currentUserName: widget.user.name ??
+                                  "", // Use empty string if user name is null
+                            );
+                          },
+                        )
+                      : Container();
+                },
               ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: size.height * 0.08,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                final pro = Provider.of<BasicProvider>(context);
+                                return ImageSelectorDialog(
+                                  pro: pro,
+                                  size: size,
+                                  recieverId: widget.user.uid!,
+                                );
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                              controller: messagecontroller,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            sendMessage();
+                          },
+                          icon: const Icon(
+                            Icons.send_rounded,
+                            color: Color.fromARGB(255, 5, 5, 5),
+                            size: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ],
@@ -190,36 +284,17 @@ class _ChatPageState extends State<GroupchatPage> {
     );
   }
 
-  chatMessages() {
-    return StreamBuilder(
-        stream: chats,
-        builder: (context, AsyncSnapshot snapshot) {
-          return snapshot.hasData
-              ? ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context, i) {
-                    return MessageTile(
-                        Message: snapshot.data.docs[i]['message'],
-                        sender: snapshot.data.docs[i]['sender'],
-                        sendByme:
-                            widget.user == snapshot.data.docs[i]['sender']);
-                  })
-              : Container();
-        });
-  }
-
-  sendMessage() {
+  sendMessage() async {
     if (messagecontroller.text.isNotEmpty) {
-      Map<String, dynamic> chatMessageMap = {
-        "message": messagecontroller.text,
-        "sender": widget.user,
-        "time": DateTime.now().millisecondsSinceEpoch,
-      };
-
-      DatabaseService().sendMessagess(widget.groupId, chatMessageMap);
-      setState(() {
-        messagecontroller.clear();
-      });
+      await DatabaseService().sendMessagess(
+        groupId: widget.groupId,
+        chatMessageData: {
+          "message": messagecontroller.text,
+          "sender": widget.user.name,
+          "time": DateTime.now().millisecondsSinceEpoch,
+        },
+      );
+      messagecontroller.clear();
     }
   }
 }

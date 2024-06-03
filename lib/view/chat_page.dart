@@ -139,64 +139,61 @@ class _ChatPageState extends State<ChatPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: Positioned(
-                    bottom: 10,
-                    left: 5,
-                    right: 5,
-                    child: Container(
-                      // chating field
-                      width: size.width * 0.9,
-                      height: size.height * 0.08,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    final pro =
-                                        Provider.of<BasicProvider>(context);
-                                    return ImageSelectorDialog(
-                                      pro: pro,
-                                      size: size,
-                                      recieverId: widget.user.uid!,
-                                    );
-                                  },
+                  child: Container(
+                    // Chat input field
+                    height: size.height * 0.08,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                final pro = Provider.of<BasicProvider>(context);
+                                return ImageSelectorDialog(
+                                  pro: pro,
+                                  size: size,
+                                  recieverId: widget.user.uid!,
                                 );
                               },
-                              icon: const Icon(Icons.abc)),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                style: GoogleFonts.poppins(
-                                    color: Colors.black, fontSize: 18),
-                                controller: messagecontroller,
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    filled: true,
-                                    fillColor:
-                                        const Color.fromRGBO(239, 237, 247, 1)),
+                            );
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                              controller: messagecontroller,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                filled: true,
                               ),
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {
-                                sendMessage();
-                              },
-                              icon: const Icon(
-                                Icons.send_rounded,
-                                color: Color.fromARGB(255, 5, 5, 5),
-                                size: 30,
-                              ))
-                        ],
-                      ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            sendMessage();
+                          },
+                          icon: const Icon(
+                            Icons.send_rounded,
+                            color: Color.fromARGB(255, 5, 5, 5),
+                            size: 30,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )

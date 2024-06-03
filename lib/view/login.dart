@@ -66,10 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             _isLoggingIn
                                 ? Lottie.asset(
-                                    'assets/login sucedss.json',
-                                    width: 150,
-                                    height: 150,
-                                  )
+                              'assets/login sucedss.json',
+                              width: 150,
+                              height: 150,
+                            )
                                 : Container(),
                           ],
                         ),
@@ -100,48 +100,43 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (context, value, child) => Button(
                             color: Colors.black,
                             name: "Login",
-                            onTap: () {
+                            onTap: () async {
                               String email = emailController.text.trim();
                               String password = passwordController.text.trim();
 
                               // Regular expression for email validation
                               RegExp emailRegExp =
-                                  RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                              RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                               if (!emailRegExp.hasMatch(email)) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Invalid email format.'),
-                                    duration: Duration(seconds: 2),
-                                    behavior: SnackBarBehavior.floating,
-                                  ),
-                                );
+                                _showErrorDialog('Invalid email format.');
                                 return;
                               }
 
                               if (email.isEmpty || password.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Please fill in all fields.'),
-                                    duration: Duration(seconds: 2),
-                                    behavior: SnackBarBehavior.floating,
+                                _showErrorDialog('Please fill in all fields.');
+                                return;
+                              }
+
+                              setState(() {
+                                _isLoggingIn = true;
+                              });
+
+                              bool loginSuccess = await value.signInWithEmail(email, password, context);
+
+                              setState(() {
+                                _isLoggingIn = false;
+                              });
+
+                              if (loginSuccess) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const BottomBar(),
                                   ),
                                 );
                               } else {
-                                value.signInWithEmail(email, password, context);
-
-                                setState(() {
-                                  _isLoggingIn = true;
-                                });
-
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const BottomBar(),
-                                    ),
-                                  );
-                                });
+                                _showErrorDialog('Invalid email or password.');
                               }
                             },
                           ),
@@ -211,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                                   text: 'Don’t have an account? ',
                                   style: TextStyle(
                                     color:
-                                        Colors.white, // Set text color to white
+                                    Colors.white, // Set text color to white
                                     fontSize: 15, // Adjust font size as needed
                                   ),
                                   children: [
@@ -219,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                                       text: 'Register Now',
                                       style: TextStyle(
                                         color:
-                                            Colors.red, // Set text color to red
+                                        Colors.red, // Set text color to red
                                         fontWeight: FontWeight
                                             .bold, // Make the text bold
                                       ),
@@ -240,6 +235,26 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
       backgroundColor: bgColor,
+    );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

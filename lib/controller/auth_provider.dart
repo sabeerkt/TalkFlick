@@ -1,9 +1,10 @@
+import 'package:chat/model/user_model.dart';
 import 'package:chat/service/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class AuthProviders extends ChangeNotifier {
+  UserModel? currentUser;
   Future<UserCredential>? user;
   AuthService service = AuthService();
   signInWithEmail(String email, String password, BuildContext context) {
@@ -17,8 +18,6 @@ class AuthProviders extends ChangeNotifier {
   signUpWithGoogle() {
     return service.signInWithGoogle();
   }
-
-  
 
   signInWithPhone(
       String phonenumber, String name, String email, BuildContext context) {
@@ -44,6 +43,7 @@ class AuthProviders extends ChangeNotifier {
   }
 
   signOut() {
+    notifyListeners();
     return service.signout();
   }
 }

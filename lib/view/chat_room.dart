@@ -27,16 +27,6 @@ class _ChatRoomState extends State<ChatRoom> {
     final currentUser = Provider.of<AuthProviders>(context).user;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: bgColor,
-      //   leading: Consumer<AuthProviders>(
-      //     builder: (context, value, child) => IconButton(
-      //         onPressed: () {
-      //           value.signOut();
-      //         },
-      //         icon: Icon(Icons.exit_to_app)),
-      //   ),
-      // ),
       backgroundColor: bgColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,7 +34,7 @@ class _ChatRoomState extends State<ChatRoom> {
           const SizedBox(
             height: 40,
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(10),
             child: Row(
               children: [
@@ -56,7 +46,7 @@ class _ChatRoomState extends State<ChatRoom> {
                 ),
                 SizedBox(width: 15),
                 Text(
-                  "Martina Wolna",
+                  currentUser.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -90,8 +80,7 @@ class _ChatRoomState extends State<ChatRoom> {
                             filled: true,
                             // fillColor: const Color.fromRGBO(102, 106, 179, 1),
                             hintText: 'Search ',
-                            prefixIcon: const Icon(Icons.abc )
-                            ),
+                            prefixIcon: const Icon(Icons.abc)),
                       ),
                     ),
                   ),

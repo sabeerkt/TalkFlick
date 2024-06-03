@@ -1,4 +1,6 @@
 import 'package:chat/constant/const.dart';
+import 'package:chat/model/user_model.dart';
+import 'package:chat/service/auth/auth_service.dart';
 import 'package:chat/view/chat_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,14 +12,23 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
-  List<String> users = List.generate(10, (index) => "User $index");
-  List<bool> isNew = List.filled(10, false);
+  List<UserModel> users = []; // Change the type to UserModel
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 3; i++) {
-      isNew[i] = true;
+    fetchUsers(); // Call the method to fetch users on initialization
+  }
+
+  Future<void> fetchUsers() async {
+    try {
+      List<UserModel> userList = await AuthService().getAllUsers();
+      setState(() {
+        users = userList;
+      });
+    } catch (e) {
+      print('Error fetching users: $e');
+      // Handle error
     }
   }
 
@@ -25,7 +36,7 @@ class _ContactListState extends State<ContactList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: bgColor, // Example color, change as needed
+        backgroundColor: bgColor,
         title: const Text(
           'Contacts',
           style: TextStyle(
@@ -35,91 +46,38 @@ class _ContactListState extends State<ContactList> {
           ),
         ),
       ),
-      backgroundColor: bgColor, // Example color, change as needed
+      backgroundColor: bgColor,
       body: ListView.builder(
         itemCount: users.length,
         itemBuilder: (BuildContext context, int index) {
-          String userName = users[index];
+          UserModel user = users[index];
 
           return Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const ChatPage(
-                //       user: userdetails,
-                //     ),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatPage(user: user),
+                  ),
+                );
               },
               child: ListTile(
                 leading: const CircleAvatar(
                   backgroundImage: AssetImage("assets/user.png"),
                 ),
-                title: Row(
-                  children: [
-                    Text(
-                      userName,
-                      style: TextStyle(
-                        color: isNew[index] ? Colors.green : Colors.white,
-                      ),
-                    ),
-                    if (isNew[index]) // Display "New" badge if the user is new
-                      Container(
-                        margin: const EdgeInsets.only(left: 8),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'New',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-                trailing: ElevatedButton(
-                  onPressed: () {
-                    _handleChatButtonClick(userName);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
-                    elevation: 3,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Text(
-                    'Chat',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                title: Text(
+                  user.name ?? '',
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
           );
         },
-      ),
-    );
-  }
-
-  void _handleChatButtonClick(String userName) {
-    // Implement your logic when the Chat button is clicked.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Start chatting with $userName'),
       ),
     );
   }

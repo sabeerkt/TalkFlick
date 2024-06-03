@@ -9,6 +9,21 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<List<UserModel>> getAllUsers() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance.collection('user').get();
+
+      List<UserModel> userList = [];
+      querySnapshot.docs.forEach((doc) {
+        userList.add(UserModel.fromJson(doc.data()));
+      });
+
+      return userList;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
   signUpWithEmailAndPassword(
     String name,
     String email,

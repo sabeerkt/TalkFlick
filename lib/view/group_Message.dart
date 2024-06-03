@@ -22,7 +22,6 @@ class _GroupMessageState extends State<GroupMessage> {
   }
 
   TextEditingController _groupNameController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -99,13 +98,8 @@ class _GroupMessageState extends State<GroupMessage> {
                                         ),
                                       ),
                                       const SizedBox(height: 20),
-                                      CircleAvatar(
-                                        radius: 50,
-                                        backgroundColor: Colors
-                                            .grey[200], // Light Grey Background
-                                        backgroundImage: const AssetImage(
-                                            'assets/add-friend.png'),
-                                      ),
+                                      //images added dailg
+
                                       const SizedBox(height: 20),
                                       TextField(
                                         controller: _groupNameController,
@@ -124,22 +118,6 @@ class _GroupMessageState extends State<GroupMessage> {
                                         ),
                                       ),
                                       const SizedBox(height: 10),
-                                      TextField(
-                                        controller: _descriptionController,
-                                        decoration: InputDecoration(
-                                          labelText: 'Description',
-                                          labelStyle: const TextStyle(
-                                            color: Colors.black87,
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              width: 2,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
                                       const SizedBox(height: 20),
                                       Row(
                                         mainAxisAlignment:
@@ -162,9 +140,14 @@ class _GroupMessageState extends State<GroupMessage> {
                                             onPressed: () {
                                               // Handle Save action
                                               DatabaseService().createGroup(
-                                                  FirebaseAuth.instance
-                                                      .currentUser!.uid,
-                                                  _groupNameController.text);
+                                                FirebaseAuth
+                                                    .instance.currentUser!.uid,
+                                                FirebaseAuth
+                                                    .instance
+                                                    .currentUser!
+                                                    .displayName!, // Pass current user's name
+                                                _groupNameController.text,
+                                              );
                                             },
                                             style: ElevatedButton.styleFrom(
                                               shape: RoundedRectangleBorder(
@@ -206,7 +189,6 @@ class _GroupMessageState extends State<GroupMessage> {
                         itemBuilder: (context, index) {
                           final GroupModel group = value.grouplist[index];
                           return Group_message(
-                            
                             image: "assets/teamwork.png",
                             name: group.groupName!,
                           );
